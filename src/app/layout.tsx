@@ -6,11 +6,27 @@ import './globals.css';
 const roobert = localFont({
   src: [
     {
+      path: '../../public/fonts/Roobert-Regular.woff',
+      weight: '300',
+      style: 'normal',
+    }, {
+      path: '../../public/fonts/Roobert-SemiBold.woff',
+      weight: '600',
+      style: 'normal',
+    }
+  ],
+  variable: '--font-roobert-trial'
+});
+const roobertTrial = localFont({
+  src: [
+    {
       path: '../../public/fonts/RoobertTRIAL-Regular.woff',
-      weight: '300'
+      weight: '300',
+      style: 'normal',
     }, {
       path: '../../public/fonts/RoobertTRIAL-SemiBold.woff',
-      weight: '700',
+      weight: '600',
+      style: 'normal',
     }
   ],
   variable: '--font-roobert'
@@ -37,10 +53,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className={`${roobert.variable} font-sans antialiased`}>
-      <body
-        className={`${roobert.variable} font-sans antialiased`}
-      >
+    <html lang='en'>
+      <body className={`${roobertTrial.className}`}>
         {children}
       </body>
     </html>

@@ -5,12 +5,20 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}'
   ],
-  theme: {   
+  theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-roobert)']
+        sans: ['var(--font-roobert)'],
+      },
+      colors: {
+        background: '#ffffff',
+        foreground: '#1A1B1C',
+        primary: '#1A1B1C',
+        button: {
+          DEFAULT: '#1A1B1C',
+          foreground: '#ffffff'
+        }
       }
-  
     }
   },
   plugins: []
