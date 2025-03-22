@@ -33,6 +33,30 @@
 }
 
 body { display:flex; background:var(--background); color:var(--foreground); width:100%; height:100%; position:fixed; top:0; left:0; overflow:clip; }
+main { position:relative; display:flex; flex-direction:column; flex:1 1 auto; }
 ::selection { background-color:rgb(var(--color-gray-0) / 30%); }
 
-.repeating-background { background-image:var(--repeating-background); background-position:0 0, 0 0, 100% 0, 0 100%; background-repeat:no-repeat; background-size:1px 100%, 100% 1px, 1px 100%, 100% 1px; }
+.is-disabled { pointer-events:none; opacity:0.5 !important; }
+
+.htn { position:absolute; top:50%; transition:opacity 0.3s ease-in-out; }
+
+/* home-title-nav control */
+.htn-ctrl { display:flex; cursor:pointer; }
+.htn-ctrl:hover .htn-btn:before { transform:scale(2); }
+.htn-ctrl:hover .htn-btn:after { transform:scale(1.5); }
+
+/* home-title repeating-background, background */
+.ht-rb { background-image:var(--repeating-background); background-position:0 0, 0 0, 100% 0, 0 100%; background-repeat:no-repeat; background-size:1px 100%, 100% 1px, 1px 100%, 100% 1px; }
+.htn-bg { position:absolute; top:50%; width:30vw; height:30vw; transform:rotate(45deg); pointer-events:none; }
+.htn-bg:before,
+.htn-bg:after { position:absolute; content:''; top:50%; left:50%; width:100%; height:100%; background:var(--repeating-background); background-position:0 0, 0 0, 100% 0, 0 100%; background-repeat:no-repeat; background-size:1px 100%, 100% 1px, 1px 100%, 100% 1px; transform:translate(-50%, -50%); opacity:0.5; transition:transform 0.3s cubic-bezier(.08,.5,.44,.96) calc(0.3s/2), opacity 0s ease calc(0.3s/2); }
+.htn-ctrl:hover ~ .htn-bg:before { opacity:0.5; transform:translate(-50%, -50%) scale(1.1); }
+.htn-ctrl:hover ~ .htn-bg:after { opacity:0.3; transform:translate(-50%, -50%) scale(1.2); }
+
+/* home-title-nav button */
+.htn-btn { position:relative; display:flex; align-items:center; justify-content:center; width:24px; height:24px; transform:rotate(45deg); }
+.htn-btn:before,
+.htn-btn:after { position:absolute; content:''; width:100%; height:100%; border:1px solid var(--color-primary); transition:transform 0.5s cubic-bezier(0.08,0.5,0.44,0.96); }
+.htn-btn:after { border-style:dotted; }
+.htn-btn-label { display:flex; align-items:center; text-transform:uppercase; font-size:11px; transition:all 0.3s ease-in-out; }
+.htn-btn-svg { transform:rotate(-45deg); }

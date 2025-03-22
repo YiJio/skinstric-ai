@@ -1,47 +1,16 @@
-import Image from 'next/image';
-import Link from 'next/link';
+// packages
+
+// components
+import Header from '@/components/header';
+import HomeTitle from '@/app/_components/home-title';
 
 export default function Home() {
   return (
-    <div className='flex flex-col shrink-1 grow-1 basis-auto'>
-      <header className='flex items-center justify-between fixed left-0 top-0 w-full h-[64px] z-3 pl-[32px] pr-[32px]'>
-        <div className='flex items-center gap-[16px] uppercase font-semibold text-[11px] leading-[1.6] tracking-tight'>
-          <Link href='/'>Skinstric</Link>
-          <div className='flex gap-[6px] opacity-60'>
-            <div className='w-[4px] h-[16px] rounded-s-[2px] border-1 border-r-0' />
-            <span>Intro</span>
-            <div className='w-[4px] h-[16px] rounded-e-[2px] border-1 border-l-0' />
-          </div>
-        </div>
-        <div className='flex items-center'>
-          <button className='bg-[var(--button-background)] hover:bg-[var(--button-background-hover)] text-[var(--button-foreground)] w-[92px] h-8 py-2 px-4 text-[10px] uppercase font-semibold tracking-tight cursor-pointer'>Enter Code</button>
-        </div>
-      </header>
-      <main className='relative flex flex-col shrink-1 grow-1 basis-auto'>
+    <>
+      <Header />
+      <main>
         <div className='flex flex-col shrink-1 grow-1 basis-auto pb-9 relative'>
-          <div className='m-auto text-center'>
-            <h1 className='flex flex-col font-normal text-[92px] leading-[0.945] tracking-[-6px]'>
-              <span>Sophiscated</span>
-              <span>Skincare</span>
-            </h1>
-          </div>
-          <div className='absolute left-0 top-1/2 -translate-y-1/2'>
-            <div className='flex'>
-              <span className='uppercase'>Discover A.I.</span>
-              <button>left</button>
-            </div>
-            <div className='absolute left-0 top-1/2 -translate-1/2 rotate-45 w-[30vw] h-[30vw] pointer-events-none repeating-background' />
-          </div>
-          <div className='absolute right-0 top-1/2 -translate-y-1/2'>
-            <div className='flex flex-row-reverse'>
-              <span className='uppercase'>Take test</span>
-              <button>right</button>
-            </div>
-            <div className='absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 rotate-45 w-[30vw] h-[30vw] pointer-events-none repeating-background' />
-          </div>
-          <div className='my-0 mx-auto w-full grid grid-rows-7 justify-center 2xl:grid-rows-6'>
-
-          </div>
+          <HomeTitle />
           <div className='fixed bottom-6 left-8 w-[320px] text-sm leading-[24px] uppercase'>Skinstric developed an A.I. that creates a highly-personalized routine tailored to what your skin needs.</div>
         </div>
         {/*<ol className='list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]'>
@@ -83,6 +52,6 @@ export default function Home() {
           </a>
         </div>*/}
       </main>
-    </div>
+    </>
   );
 }
