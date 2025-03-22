@@ -4,7 +4,10 @@
 import Header from '@/components/header';
 import HomeTitle from '@/app/_components/home-title';
 
+
+
 export default function Home() {
+  
   return (
     <>
       <Header />

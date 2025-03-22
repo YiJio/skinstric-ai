@@ -28,7 +28,7 @@ const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
 		setPosition('center');
 	}
 
-	useEffect(() => {
+	/*useEffect(() => {
 		if (leftRef.current) {
 			leftRef.current.addEventListener('mouseenter', () => handleMouseEnter('left'));
 			leftRef.current.addEventListener('mouseleave', handleMouseLeave);
@@ -47,7 +47,7 @@ const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
 				rightRef.current.removeEventListener('mouseleave', handleMouseLeave);
 			}
 		}
-	}, [leftRef, rightRef]);
+	}, [leftRef, rightRef]);*/
 
 	useEffect(() => {
 		if(containerRef.current && textRef.current && text2Ref.current) {
@@ -67,14 +67,14 @@ const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
 
 	return (
 		<div ref={containerRef} className='w-full h-full flex'>
-			<HomeTitleNav ref={leftRef} position='left' href='' label='Discover A.I.' isHovered={position === 'left'} isOtherHovered={position === 'right'} isDisabled />
+			<HomeTitleNav ref={leftRef} position='left' href='' label='Discover A.I.' isOtherHovered={position === 'right'} isDisabled />
 			<div className='m-auto text-center'>
 				<div className='font-normal text-[92px] leading-[0.945] tracking-[-6px]'>
 					<HomeTitleSpan ref={textRef} text='Sophiscated' /><br/>
 					<HomeTitleSpan ref={text2Ref} text='Skincare' />
 				</div>
 			</div>
-			<HomeTitleNav ref={rightRef} position='right' href='/introduction' label='Take test' isHovered={position === 'right'} isOtherHovered={position === 'left'} />
+			<HomeTitleNav ref={rightRef} position='right' href='/introduction' label='Take test' isOtherHovered={position === 'left'} />
 		</div>
 	);
 }
