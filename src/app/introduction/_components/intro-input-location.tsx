@@ -8,11 +8,11 @@ import { Libraries, useLoadScript } from '@react-google-maps/api';
 
 interface IntroInputLocationProps {
 	label: string;
-	field: string;
+	field?: string;
 	hint?: string;
 	placeholder?: string;
-	onChange: (e: any) => void;
-	onSubmit: (place: string) => void;
+	onChange?: (e: any) => void;
+	onSubmit: () => void;
 }
 
 type Ref = HTMLInputElement;
@@ -40,24 +40,8 @@ const IntroInputLocation = forwardRef<Ref, IntroInputLocationProps>(({ label, fi
 		onChange && onChange(e.target.value);
 	}
 
-	const handleChange2 = (place: string) => {
-		//if (mode === 1) { setValue(e.target.value); }
-		onChange && onChange(place);
-	}
-
 	const handleSubmit = (e: any) => {
-		e.preventDefault();
-		onSubmit && onSubmit(place);
-	}
-
-	const handleSelect = async (place: any) => {
-		//setValue(place, false);
-		onChange && onChange(place.description);
-		//clearSuggestions();
-		//const results = await getGeocode({ address: place.description });
-		//const { lat, lng } = await getLatLng(results[0]);
-		//console.log(results, lat, lng)
-
+		onChange && onSubmit();
 	}
 
 	useEffect(() => {
@@ -74,7 +58,7 @@ const IntroInputLocation = forwardRef<Ref, IntroInputLocationProps>(({ label, fi
     }
 	}, [isLoaded]);
 
-	if(!isLoaded) return <div>Loading...</div>;
+	if(!isLoaded) return <div className='sai-layer__content'>Loading...</div>;
 
 	return (
 		<div ref={layerRef} className='sai-layer__content flex flex-col gap-1 max-w-[30vw]'>

@@ -5,14 +5,16 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 interface IntroInputProps {
 	label: string;
-	field: string;
+	field?: string;
 	hint?: string;
 	placeholder?: string;
-	onChange: (e: any) => void;
+	onChange?: (e: any) => void;
 	onSubmit: () => void;
 }
 
 type Ref = HTMLInputElement;
+
+const WIDTH = 420;
 
 const IntroInput = forwardRef<Ref, IntroInputProps>(({ label, field, hint, placeholder, onChange, onSubmit }, ref) => {
 	// states
@@ -22,7 +24,8 @@ const IntroInput = forwardRef<Ref, IntroInputProps>(({ label, field, hint, place
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleChange = (e: any) => {
-		onChange && onChange(e.target.value);
+		const newValue = e.target.value.replace(/[^a-zA-Z]/g, '');
+		onChange && onChange(newValue);
 	}
 
 	const handleSubmit = (e: any) => {
@@ -30,16 +33,49 @@ const IntroInput = forwardRef<Ref, IntroInputProps>(({ label, field, hint, place
 		onSubmit && onSubmit();
 	}
 
+	useEffect(() => {
+		const animateLayer = async () => {
+			const { gsap } = await import('gsap');
+			if (layerRef.current) {
+				const elements = layerRef.current.querySelectorAll('.sai-layer__element');
+				elements.forEach((element) => {
+					gsap.to(element, {
+						opacity: 1,
+						width: WIDTH,
+						duration: 1,
+						ease: 'power2.out'
+					});
+				});
+			}
+		}
+		const animateLayerOut = async () => {
+			const { gsap } = await import('gsap');
+			if (layerRef.current) {
+				const elements = layerRef.current.querySelectorAll('.sai-layer__element');
+				elements.forEach((element) => {
+					gsap.to(element, {
+						opacity: 0,
+						width: 0,
+						duration: 1,
+						ease: 'power2.in'
+					});
+				});
+			}
+		}
+		animateLayer();
+		return () => { animateLayerOut(); }
+	}, []);
+
 	return (
-		<div ref={layerRef} className='sai-layer__content flex flex-col gap-1 max-w-[30vw]'>
-			<span className='uppercase opacity-40 text-center text-sm'>
+		<div ref={layerRef} className='sai-layer__content sai-form__section'>
+			<span className='sai-layer__element sai-form__help'>
 				{!isTyping
 					? field !== '' ? hint : 'Click to type'
 					: field !== '' ? hint : hint
 				}
 			</span>
-			<form onSubmit={handleSubmit}>
-				<input ref={inputRef} type='text' id={label} name={label} className={`input tracking-tighter w-full${(field === '' && !isTyping) ? ' is-hidden ' : ''}`} value={field} placeholder={placeholder} onChange={handleChange} onFocus={() => setIsTyping(true)} onBlur={() => setIsTyping(false)} />
+			<form className='sai-layer__element' onSubmit={handleSubmit}>
+				<input ref={inputRef} type='text' id={label} name={label} className={`sai-input tracking-tighter w-full${(field === '' && !isTyping) ? ' is-hidden ' : ''}`} value={field} placeholder={placeholder} onChange={handleChange} onFocus={() => setIsTyping(true)} onBlur={() => setIsTyping(false)} />
 				<label htmlFor={label} className={`${field !== '' ? 'is-hidden ' : ''}absolute -top-1 left-0 w-full h-full cursor-text text-center tracking-tighter`}>{hint}</label>
 			</form>
 		</div>

@@ -38,12 +38,47 @@
 body { display:flex; background:var(--background); color:var(--foreground); width:100%; height:100%; position:fixed; top:0; left:0; overflow:clip; }
 main { position:relative; display:flex; flex-direction:column; flex:1 1 auto; }
 
+li { display:flex; align-items:baseline; gap:8px; }
+li img { width:12px; }
+li > div { flex:1; display:flex; flex-direction:column; }
+button { cursor:pointer; }
+
 form { position:relative; border-bottom:1px solid var(--color-primary); }
 label { text-align:center; font-size:clamp(44px,12px + 2.5vw,60px); transition:opacity 0.2s ease; }
 input { padding:4px 0; text-align:center; color:var(--color-primary); font-size:clamp(44px,12px + 2.5vw,60px); line-height:1; }
 input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opacity 0.2s ease; }
 
 .is-disabled { pointer-events:none; opacity:0.5 !important; }
+
+.sai-button { position:relative; padding:8px 16px; height:36px; border:1px solid var(--color-primary); background:var(--color-white); color:var(--color-primary); font-weight:600; letter-spacing:-0.025em; line-height:1; }
+.sai-button:before { position:absolute; content:''; width:100%; height:0; bottom:0; right:0; background:var(--color-primary); transition:all 0.3s ease; }
+.sai-button:hover:before { height:100%; bottom:0; }
+.sai-button span { position:relative; }
+.sai-button:hover span, .sai-button--primary span { color:var(--color-white); }
+.sai-button--primary { border-color:var(--color-white); background:var(--color-primary); color:var(--color-white); }
+.sai-button--primary:before { background:var(--color-white); }
+.sai-button--primary:hover span { color:var(--color-primary); }
+
+.sai-preview { display:flex; flex-direction:column; justify-content:center; gap:4px; }
+.sai-preview__wrapper { background:rgb(var(--color-gray-2) / 20%); width:100px; height:100px; overflow:hidden; }
+.sai-preview__img { width:100%; max-width:100%; max-height:100%; object-fit:cover; cursor:pointer; }
+.sai-preview__img--empty { padding:8px; filter:invert(1); opacity:0.1; cursor:default; }
+.sai-preview span { display:block; text-align:center; font-size:12px; }
+
+.sai-portal { position:fixed; width:100%; height:100%; top:0; left:0; display:flex; align-items:center; }
+.sai-dialog { margin:auto; display:flex; flex-direction:column; width:320px; max-width:400px; max-height:400px; background:transparent; }
+.sai-dialog__border { width:0; height:1px; background:var(--color-primary); opacity:0; }
+.sai-dialog__wrapper { height:0; opacity:0; overflow:hidden; background:var(--color-primary); color:var(--color-white); }
+.sai-dialog__wrapper > * { padding:8px 16px; font-size:14px; text-transform:uppercase; }
+.sai-dialog__header { border-bottom:1px solid var(--color-white); letter-spacing:0.025em; }
+.sai-dialog__content { padding:20px 16px; }
+.sai-dialog__content li { margin-bottom:16px; }
+.sai-dialog__content li img { filter:invert(1); }
+.sai-dialog__content small { text-transform:lowercase; font-size:14px; color:rgb(var(--color-gray-0) / 50%); }
+.sai-dialog__footer { display:flex; gap:32px; border-top:1px solid var(--color-white); }
+.sai-dialog__footer button { text-transform:uppercase; }
+.sai-dialog__footer button:hover { transform:translateY(1px); }
+.sai-dialog__footer button:active { transform:translateY(2px); }
 
 .htn { position:absolute; top:50%; transition:opacity 0.3s ease-in-out; }
 
@@ -72,10 +107,14 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-heading,
 .sai-stepnav { position:absolute; text-transform:uppercase; letter-spacing:-0.025em; font-weight:600; }
 
-/* intro-layer */
+/* layer */
 .sai-layer { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; }
 .sai-layer__content { position:relative; margin:auto; }
+.sai-layer__element { width:0; opacity:0; overflow:hidden; white-space:nowrap; }
+.sai-loading .sai-layer__element { white-space:normal; text-align:center; text-transform:uppercase; font-weight:600; }
 
+.sai-form__section { display:flex; flex-direction:column; gap:4px; max-width:30vw; }
+.sai-form__help { text-transform:uppercase; color:rgb(var(--color-gray-0)); text-align:center; font-size:14px; }
 
 .auto { position:relative; width:100%; }
 .auto-list { position:relative; width:100%; }
@@ -104,3 +143,4 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-imginput { position:relative; display:flex; align-items:center; justify-content:center; width:100%; height:100%; }
 .sai-imginput__img { cursor:pointer; transition:transform 0.3s ease-in-out; }
 .sai-imginput__img:hover { transform:scale(0.9); transition:transform 0.3s ease-in-out; }
+.sai-imginput__img--cam:hover { transform:scale(0.9) rotate(45deg); }

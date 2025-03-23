@@ -9,15 +9,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['var(--font-roobert)'],
-      },
-      colors: {
-        background: '#ffffff',
-        foreground: '#1A1B1C',
-        primary: '#1A1B1C',
-        button: {
-          DEFAULT: '#1A1B1C',
-          foreground: '#ffffff'
-        }
       }
     }
   },

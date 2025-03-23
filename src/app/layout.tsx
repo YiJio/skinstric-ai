@@ -56,6 +56,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${roobertTrial.className}`}>
         <div className='flex flex-col shrink-1 grow-1 basis-auto'>{children}</div>
+        <div id='root-portal' />
       </body>
     </html>
   );
