@@ -9,12 +9,13 @@ interface NavButtonProps {
 	label: string;
 	noMargin?: boolean;
 	isDisabled?: boolean;
+	inverse?: boolean;
 	onClick?: () => void;
 }
 
 type Ref = HTMLElement;
 
-const NavButton = forwardRef<Ref, NavButtonProps>(({ position, label, noMargin, isDisabled, onClick }, ref) => {
+const NavButton = forwardRef<Ref, NavButtonProps>(({ position, label, noMargin, isDisabled, inverse = false, onClick }, ref) => {
 	// states
 	const [isHovered, setIsHovered] = useState(false);
 	// refs
@@ -44,7 +45,7 @@ const NavButton = forwardRef<Ref, NavButtonProps>(({ position, label, noMargin, 
 	}
 
 	return (
-		<div ref={buttonRef} className={`nav-btn${isDisabled ? ' is-disabled' : ''} ${spanMargin}`} onClick={handleClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ flexDirection: position === 'left' ? 'row' : 'row-reverse' }}>
+		<div ref={buttonRef} className={`nav-btn${isDisabled ? ' is-disabled' : ''}${inverse ? ' h-inverted' : ''} ${spanMargin}`} onClick={handleClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ flexDirection: position === 'left' ? 'row' : 'row-reverse' }}>
 			<span className='nav-btn-icon'>
 				<span className='nav-btn-svg'>{position === 'left' ? <MdArrowLeft /> : <MdArrowRight />}</span>
 			</span>

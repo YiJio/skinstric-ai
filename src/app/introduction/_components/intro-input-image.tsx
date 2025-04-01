@@ -6,6 +6,8 @@ import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react
 import { useDialog } from '@/hooks/use-dialog';
 // components
 import Dialog from '@/components/dialog';
+import { useRouter } from 'next/navigation';
+import Popup from '@/components/popup';
 
 interface IntroInputImageProps {
 	image?: string;
@@ -27,11 +29,12 @@ const IntroInputImage = forwardRef<Ref, IntroInputImageProps>(({ image, content,
 	const layerRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	// hooks
+	const router = useRouter();
 	const { showDialog, openDialog, closeDialog, dialogContent, dialogRef } = useDialog();
 
-	const handleClick = () => {
+	const handleAccessCamera = () => {
 		console.log('opened?')
-		
+		router.push('/camera');
 	}
 
 	const handleImageUpload = async (e: any) => {
@@ -63,7 +66,8 @@ const IntroInputImage = forwardRef<Ref, IntroInputImageProps>(({ image, content,
 					</div>
 				</div>
 				<div className='sai-imginput__img sai-imginput__img--cam'>
-					<img src='/icons/camera-icon.svg' onClick={handleClick} />
+					<img src='/icons/camera-icon.svg' />
+					<Popup content={'Allow A.I. to access your camera'} cancelText='Deny' confirmText='Allow' onConfirm={handleAccessCamera} />
 				</div>
 			</div>
 			{/*showDialog && (<div ref={dialogRef}>{dialogContent && <Dialog {...dialogContent} onConfirm={handleAccessGallery} onCancel={closeDialog} height={332} />}</div>)*/}

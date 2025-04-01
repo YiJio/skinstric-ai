@@ -17,14 +17,14 @@ export const reduceDemographics = (demographics: any): DemographicsSection[] => 
 			.sort((a, b) => b.value - a.value),
 	});
 	sections.push({
-		category: 'Gender',
-		items: Object.entries(demographics?.gender)
+		category: 'Age',
+		items: Object.entries(demographics?.age)
 			.map(([label, value]: [string, number]) => ({ label, value }))
 			.sort((a, b) => b.value - a.value),
 	});
 	sections.push({
-		category: 'Age',
-		items: Object.entries(demographics?.age)
+		category: 'Gender',
+		items: Object.entries(demographics?.gender)
 			.map(([label, value]: [string, number]) => ({ label, value }))
 			.sort((a, b) => b.value - a.value),
 	});

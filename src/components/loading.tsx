@@ -7,13 +7,14 @@ import DottedBox from './dotted-box';
 
 interface LoadingProps {
 	width?: number;
-	content: string;
+	content: ReactNode;
+	other?: ReactNode;
 	isClosing?: boolean;
 }
 
 type Ref = HTMLElement;
 
-const Loading = forwardRef<Ref, LoadingProps>(({ width = 400, content, isClosing }, ref) => {
+const Loading = forwardRef<Ref, LoadingProps>(({ width = 400, content, other, isClosing }, ref) => {
 	// refs
 	const layerRef = useRef<HTMLDivElement>(null);
 	const elementRef = useRef<HTMLDivElement>(null);
@@ -51,29 +52,32 @@ const Loading = forwardRef<Ref, LoadingProps>(({ width = 400, content, isClosing
 		}
 	}
 
-	useEffect(() => {		
+	useEffect(() => {
 		animateLayer();
 		//return () => { animateLayerOut(); }
 	}, [content]);
 
 	useEffect(() => {
 		console.log('isclosing', isClosing)
-		if(isClosing) animateLayerOut();
+		if (isClosing) animateLayerOut();
 	}, [isClosing]);
 
 	return (
 		<div className='sai-loading'>
 			<div className='sai-layer flex-col'>
-				<DottedBox speedMultiplier={10} width={width} initRotations={[45, 60, 75]} />
+				<DottedBox speedMultiplier={48} width={width} initRotations={[45, 60, 75]} />
 			</div>
 			<div className='sai-layer'>
 				<div ref={layerRef} className='sai-layer__content'>
-					<div ref={elementRef} className='sai-layer__element'>
-					{content}
+					<div ref={elementRef} className='sai-layer__element flex flex-col gap-4 items-center'>
+						{content}
 						{/*<div ref={contentRef} style={{ opacity:'0' }}>{content}</div>*/}
 					</div>
 				</div>
 			</div>
+			{other && (<div className='sai-layer'>
+				{other}
+			</div>)}
 		</div>
 	);
 });

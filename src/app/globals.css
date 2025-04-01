@@ -50,6 +50,8 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 
 .is-disabled { pointer-events:none; opacity:0.5 !important; }
 
+.sai-button-group { display:flex; gap:8px; }
+
 .sai-button { position:relative; padding:8px 16px; height:36px; border:1px solid var(--color-primary); background:var(--color-white); color:var(--color-primary); font-weight:600; letter-spacing:-0.025em; line-height:1; }
 .sai-button:before { position:absolute; content:''; width:100%; height:0; bottom:0; right:0; background:var(--color-primary); transition:all 0.3s ease; }
 .sai-button:hover:before { height:100%; bottom:0; }
@@ -80,6 +82,14 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-dialog__footer button { text-transform:uppercase; }
 .sai-dialog__footer button:hover { transform:translateY(1px); }
 .sai-dialog__footer button:active { transform:translateY(2px); }
+
+.sai-popup { opacity:0; position:absolute; top:50%; left:100%; width:340px; height:140px; }
+.sai-popup__wrapper { display:flex; flex-direction:column; height:100%; background:var(--color-primary); color:var(--color-white); }
+.sai-popup__content, .sai-popup__footer { padding:8px 16px; }
+.sai-popup__content { flex:1; }
+.sai-popup__footer { height:36px; display:flex; align-items:center; justify-content:flex-end; gap:32px; border-top:1px solid var(--color-white); }
+
+.h-inverted { filter:invert(1); }
 
 .htn { position:absolute; top:50%; transition:opacity 0.3s ease-in-out; }
 
@@ -145,14 +155,15 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-datapt--bl:after { right:-16px; }
 
 .sai-imginput { position:relative; display:flex; align-items:center; justify-content:center; width:100%; height:100%; }
-.sai-imginput__img { cursor:pointer; transition:transform 0.3s ease-in-out; }
-.sai-imginput__img:hover { transform:scale(0.9); transition:transform 0.3s ease-in-out; }
-.sai-imginput__img--cam:hover { transform:scale(0.9) rotate(45deg); }
+.sai-imginput__img img { cursor:pointer; transition:transform 0.3s ease-in-out; }
+.sai-imginput__img:hover img { transform:scale(0.9); transition:transform 0.3s ease-in-out; }
+.sai-imginput__img--cam { position:relative; }
+.sai-imginput__img--cam:hover img { transform:scale(0.9) rotate(45deg); }
 
 
 .sai-menu { position:relative; margin:auto; width:364px; height:364px; }
-.sai-menu__option { position:absolute; width:148px; height:148px; background:rgb(var(--color-gray-0) / 25%); transition:background 0.2s ease; cursor:pointer; }
-.sai-menu__option:hover { background:rgb(var(--color-gray-0) / 50%); transition:background 0.2s ease; }
+.sai-menu__option { position:absolute; width:148px; height:148px; background:rgb(var(--color-gray-1) / 10%); transition:background 0.2s ease; cursor:pointer; }
+.sai-menu__option:hover { background:rgb(var(--color-gray-1) / 25%); transition:background 0.2s ease; }
 .sai-menu__option:first-child { top:0; left:50%; transform:translateX(-50%) rotate(45deg); }
 .sai-menu__option:nth-child(2) { top:50%; left:0; transform:translateY(-50%) rotate(45deg); }
 .sai-menu__option:nth-child(3) { top:50%; right:0; transform:translateY(-50%) rotate(45deg); }
@@ -160,13 +171,29 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-menu__title { position:absolute; top:50%; left:50%; display:flex; align-items:center; justify-content:center; text-align:center; text-transform:uppercase; transform:translate(-50%,-50%) rotate(-45deg); }
 
 
-.sai-layer__content--analysis { margin:18rem 32px auto; width:100vw; display:flex; }
+.sai-layer__content--analysis { margin:18rem 32px auto; width:100vw; display:flex; gap:16px; }
 
 .sai-tabs { display:flex; flex-direction:column; gap:12px; width:200px; text-transform:uppercase; }
-.sai-tabs__tab { padding:16px; width:100%; height:100px; line-height:1; display:flex; flex-direction:column; justify-content:space-between; border-top:2px solid var(--color-primary); background:rgb(var(--color-gray-0) / 25%); transition:background 0.2s ease; cursor:pointer; }
-.sai-tabs__tab:hover { background:rgb(var(--color-gray-0) / 50%); transition:background 0.2s ease; }
+.sai-tabs__tab { padding:16px; width:100%; height:100px; line-height:1; display:flex; flex-direction:column; justify-content:space-between; border-top:2px solid var(--color-primary); background:rgb(var(--color-gray-1) / 10%); transition:background 0.2s ease; cursor:pointer; }
+.sai-tabs__tab:hover { background:rgb(var(--color-gray-1) / 25%); transition:background 0.2s ease; }
 .sai-tabs__tab.isActive { background:var(--color-primary); color:var(--color-white); }
 
 
-.sai-stats { display:flex; flex:1; }
-.sai-stats__score { width:75%; }
+.sai-stats { display:flex; gap:16px; flex:1; font-size:16px; }
+.sai-stats > div { border-top:2px solid var(--color-primary); background:rgb(var(--color-gray-1) / 10%); line-height:1; }
+.sai-stats__score { flex:1; padding:20px; }
+.sai-stats__label { font-size:40px; letter-spacing:0.05em; }
+.sai-stats__list { width:440px; }
+.sai-stats__item { padding:20px; display:flex; justify-content:space-between; text-transform:uppercase; }
+.sai-stats__value { padding:0 20px; height:48px; display:flex; align-items:center; justify-content:space-between; text-transform:capitalize; transition:background 0.2s ease; cursor:pointer; }
+.sai-stats__value > div { display:flex; gap:12px; }
+.sai-stats__value:not(.isActive):hover { background:rgb(var(--color-gray-1) / 25%); transition:background 0.2s ease; }
+.sai-stats__value.isActive { background:var(--color-primary); color:var(--color-white); }
+
+.sai-progress { margin:0 auto; width:380px; height:380px; transform:rotate(-90deg); }
+.sai-progress__track { stroke:rgb(var(--color-gray-1) / 50%); }
+.sai-progress__percent { stroke:var(--color-primary); }
+.sai-progress__label { transform-origin:center; transform:rotate(90deg); }
+
+.sai-footer { position:absolute; left:0; bottom:0; width:100%; height:calc(48px + 8px); }
+.sai-footer__wrapper { margin:0 32px 32px; display:flex; align-items:center; justify-content:space-between; text-transform:uppercase; letter-spacing:-0.025em; }

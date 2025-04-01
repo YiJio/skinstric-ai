@@ -15,21 +15,26 @@ import NavButton from '@/components/nav-button';
 import AnalysisTabs from '../_components/analysis-tabs';
 import { reduceDemographics } from './utils';
 import AnalysisStats from '../_components/analysis-stats';
+import Footer from '@/components/footer';
 
 export default function Page() {
 	// states
-	const [activeTab, setActiveTab] = useState(0);
+	const [activeCategory, setActiveCategory] = useState(0);
+	const [activeItem, setActiveItem] = useState(0);
 	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
 	// hooks
 	const router = useRouter();
 	const demoStore = usePersistStore(useDemographicsStore, (state) => state);
 	// variables
 	const demoSorted = useMemo(() => {
-		if(demoStore?.demographics) return reduceDemographics(demoStore?.demographics);
+		if (demoStore?.demographics) return reduceDemographics(demoStore?.demographics);
 		return [];
 	}, [demoStore?.demographics]);
 
-	console.log(demoSorted[0]?.items[0]?.label)
+	const handleChangeTab = (index: number) => {
+		setActiveCategory(index);
+		setActiveItem(0);
+	}
 
 	return (
 		<>
@@ -42,8 +47,8 @@ export default function Page() {
 				</div>
 				<div className='sai-layer'>
 					<div className='sai-layer__content sai-layer__content--analysis'>
-						<AnalysisTabs values={[demoSorted[0]?.items[0]?.label, demoSorted[1]?.items[0]?.label, demoSorted[2]?.items[0]?.label]} tabs={['Race', 'Age', 'Gender']} activeTab={activeTab} onChangeTab={setActiveTab} />
-						<AnalysisStats activeTab={activeTab} stats={demoSorted?.[activeTab]} />
+						<AnalysisTabs values={[demoSorted[0]?.items[0]?.label, demoSorted[1]?.items[0]?.label, demoSorted[2]?.items[0]?.label]} tabs={['Race', 'Age', 'Gender']} category={activeCategory} onChangeTab={(index) => handleChangeTab(index)} />
+						<AnalysisStats category={demoSorted?.[activeCategory]?.category} stats={demoSorted?.[activeCategory]} activeItem={activeItem} setActiveItem={setActiveItem} />
 					</div>
 					{/*<div className='sai-layer__content'>
 						<strong>Race</strong><br/>
@@ -61,12 +66,23 @@ export default function Page() {
 						Female: {demoStore?.demographics.gender.female}<br/>
 					</div>*/}
 				</div>
-				<div className='sai-stepnav bottom-8 left-8'>
+				<Footer left={<NavButton position='left' label='Back' onClick={() => router.push('/analysis')} noMargin />} right={<div className='sai-button-group'>
+					<button className='sai-button'>
+						<span>Reset</span>
+					</button>
+					<button className='sai-button sai-button--primary'>
+						<span>Confirm</span>
+					</button>
+				</div>} />
+				{/*<div className='sai-stepnav bottom-8 left-8'>
 					<NavButton position='left' label='Back' onClick={() => router.push('/analysis')} noMargin />
+				</div>
+				<div className='sai-stepnav bottom-8 left-1/2'>
+					<span>If A.I. estimate is wrong, selec the correct one.</span>
 				</div>
 				<div className='sai-stepnav bottom-8 right-8'>
 					buttons
-				</div>
+				</div>*/}
 			</main>
 		</>
 	);
