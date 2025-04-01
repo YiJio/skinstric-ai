@@ -59,10 +59,11 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-button--primary:before { background:var(--color-white); }
 .sai-button--primary:hover span { color:var(--color-primary); }
 
-.sai-preview { display:flex; flex-direction:column; justify-content:center; gap:4px; }
+.sai-preview { display:flex; flex-direction:column; gap:4px; }
 .sai-preview__wrapper { background:rgb(var(--color-gray-2) / 20%); width:100px; height:100px; overflow:hidden; }
-.sai-preview__img { width:100%; max-width:100%; max-height:100%; object-fit:cover; cursor:pointer; }
-.sai-preview__img--empty { padding:8px; filter:invert(1); opacity:0.1; cursor:default; }
+.sai-preview__img { width:100%; height:100%; max-width:100%; max-height:100%; object-fit:cover; cursor:pointer; filter:grayscale(1); transition:filter 0.3s ease-in-out; }
+.sai-preview__img:hover { filter:grayscale(0); transition:filter 0.3s ease-in-out; }
+.sai-preview__img--empty { padding:8px; filter:invert(1); opacity:0.1; cursor:default; pointer-events:none; }
 .sai-preview span { display:block; text-align:center; font-size:12px; }
 
 .sai-portal { position:fixed; width:100%; height:100%; top:0; left:0; display:flex; align-items:center; }
@@ -105,7 +106,10 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 
 
 .sai-heading,
-.sai-stepnav { position:absolute; text-transform:uppercase; letter-spacing:-0.025em; font-weight:600; }
+.sai-stepnav { position:absolute; text-transform:uppercase; letter-spacing:-0.025em; }
+.sai-heading { display:flex; flex-direction:column; gap:8px; max-width:400px; }
+.sai-heading__desc { display:flex; flex-direction:column; font-size:14px; letter-spacing:0.05em; }
+.sai-heading h1 { line-height:1; font-size:72px; font-weight:400; letter-spacing:-0.05em; }
 
 /* layer */
 .sai-layer { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; }
@@ -144,3 +148,25 @@ input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opa
 .sai-imginput__img { cursor:pointer; transition:transform 0.3s ease-in-out; }
 .sai-imginput__img:hover { transform:scale(0.9); transition:transform 0.3s ease-in-out; }
 .sai-imginput__img--cam:hover { transform:scale(0.9) rotate(45deg); }
+
+
+.sai-menu { position:relative; margin:auto; width:364px; height:364px; }
+.sai-menu__option { position:absolute; width:148px; height:148px; background:rgb(var(--color-gray-0) / 25%); transition:background 0.2s ease; cursor:pointer; }
+.sai-menu__option:hover { background:rgb(var(--color-gray-0) / 50%); transition:background 0.2s ease; }
+.sai-menu__option:first-child { top:0; left:50%; transform:translateX(-50%) rotate(45deg); }
+.sai-menu__option:nth-child(2) { top:50%; left:0; transform:translateY(-50%) rotate(45deg); }
+.sai-menu__option:nth-child(3) { top:50%; right:0; transform:translateY(-50%) rotate(45deg); }
+.sai-menu__option:last-child { bottom:0; left:50%; transform:translateX(-50%) rotate(45deg); }
+.sai-menu__title { position:absolute; top:50%; left:50%; display:flex; align-items:center; justify-content:center; text-align:center; text-transform:uppercase; transform:translate(-50%,-50%) rotate(-45deg); }
+
+
+.sai-layer__content--analysis { margin:18rem 32px auto; width:100vw; display:flex; }
+
+.sai-tabs { display:flex; flex-direction:column; gap:12px; width:200px; text-transform:uppercase; }
+.sai-tabs__tab { padding:16px; width:100%; height:100px; line-height:1; display:flex; flex-direction:column; justify-content:space-between; border-top:2px solid var(--color-primary); background:rgb(var(--color-gray-0) / 25%); transition:background 0.2s ease; cursor:pointer; }
+.sai-tabs__tab:hover { background:rgb(var(--color-gray-0) / 50%); transition:background 0.2s ease; }
+.sai-tabs__tab.isActive { background:var(--color-primary); color:var(--color-white); }
+
+
+.sai-stats { display:flex; flex:1; }
+.sai-stats__score { width:75%; }

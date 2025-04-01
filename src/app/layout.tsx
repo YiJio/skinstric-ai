@@ -6,16 +6,16 @@ import './globals.css';
 const roobert = localFont({
   src: [
     {
-      path: '../../public/fonts/Roobert-Regular.woff',
+      path: '../../public/fonts/Roobert-Regular.woff2',
       weight: '300',
-      style: 'normal',
+      //style: 'normal',
     }, {
-      path: '../../public/fonts/Roobert-SemiBold.woff',
+      path: '../../public/fonts/Roobert-SemiBold.woff2',
       weight: '600',
-      style: 'normal',
+      //style: 'normal',
     }
   ],
-  variable: '--font-roobert-trial'
+  variable: '--font-roobert'
 });
 const roobertTrial = localFont({
   src: [
@@ -29,7 +29,7 @@ const roobertTrial = localFont({
       style: 'normal',
     }
   ],
-  variable: '--font-roobert'
+  variable: '--font-roobert-trial'
 });
 
 /*const geistSans = Geist({
@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${roobertTrial.className}`}>
+      <body className={`${roobert.className}`}>
         <div className='flex flex-col shrink-1 grow-1 basis-auto'>{children}</div>
         <div id='root-portal' />
       </body>

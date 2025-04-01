@@ -91,7 +91,7 @@ const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'C
 					<div className='sai-dialog__header'>{header}</div>
 					<div className='sai-dialog__content'>{content}</div>
 					<div className={`sai-dialog__footer ${centeredFooter ? 'justify-center' : 'justify-end'}`}>
-						<button className={centeredFooter ? 'sai-button sai-button--primary' : ''} onClick={() => handleAction(0)}>
+						<button onClick={() => handleAction(0)}>
 							<span>{cancelText}</span>
 						</button>
 						<button className={centeredFooter ? 'sai-button sai-button--primary' : ''} onClick={() => handleAction(1)}>

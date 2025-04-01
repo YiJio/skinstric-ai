@@ -3,11 +3,12 @@ import React, { forwardRef } from 'react';
 import Link from 'next/link';
 
 interface HeaderProps {
+	title?: string;
 }
 
 type Ref = HTMLElement;
 
-const Header = forwardRef<Ref, HeaderProps>(({  }, ref) => {
+const Header = forwardRef<Ref, HeaderProps>(({ title = 'Intro' }, ref) => {
 
 	return (
 		<header className='flex items-center justify-between fixed left-0 top-0 w-full h-[64px] z-3 pl-[32px] pr-[32px]'>
@@ -15,7 +16,7 @@ const Header = forwardRef<Ref, HeaderProps>(({  }, ref) => {
 				<Link href='/'>Skinstric</Link>
 				<div className='flex gap-[6px] opacity-60'>
 					<div className='w-[4px] h-[16px] rounded-s-[2px] border-1 border-r-0' />
-					<span>Intro</span>
+					<span>{title}</span>
 					<div className='w-[4px] h-[16px] rounded-e-[2px] border-1 border-l-0' />
 				</div>
 			</div>

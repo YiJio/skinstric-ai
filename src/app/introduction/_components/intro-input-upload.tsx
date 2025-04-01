@@ -4,9 +4,6 @@
 import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
 // hooks
 import { useDialog } from '@/hooks/use-dialog';
-import usePersistStore from '@/hooks/use-persist-store';
-// stores
-import { useGalleryStore } from '@/stores/gallery-store';
 // components
 import Dialog from '@/components/dialog';
 import { UploadRulesDialogContent, UploadRulesDialogHeader } from './upload-rules-dialog';
@@ -23,17 +20,13 @@ type Ref = HTMLInputElement;
 const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, width = 320, onChange }, ref) => {
 	// states
 	const [image, setImage] = useState<string | undefined>('');
-	const [whichDialog, setWhichDialog] = useState('');
 	// refs
 	const layerRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	// hooks
 	const { showDialog, openDialog, closeDialog, dialogContent, dialogRef } = useDialog();
-	// stores
-	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
 
 	const handleOpen = (mode: string) => {
-		setWhichDialog(mode);
 		if(mode === 'rules') {
 			console.log('trying to open upload rules');
 			openDialog({
@@ -42,7 +35,7 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 				content: <UploadRulesDialogContent />,
 				confirmText: 'Upload',
 				onConfirm: () => handleOpen('gallery'),
-				onCancel: () => { closeDialog(); setWhichDialog(''); }
+				onCancel: closeDialog
 			});
 		} else if(mode === 'gallery') {
 			closeDialog();
@@ -50,11 +43,12 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 			setTimeout(() => {
 				openDialog({
 					width: 400,
+					height: 260,
 					header: <GalleryDialogHeader />,
-					content: <GalleryDialogContent images={galleryStore?.gallery} onSelect={(image) => handleSelectFromChild(image)} onRemove={(index) => galleryStore?.removeImage(index)} />,
+					content: <GalleryDialogContent onSelect={(image) => handleSelectFromChild(image)} />,
 					confirmText: 'Upload new',
 					onConfirm: handleUploadFromChild,
-					onCancel: () => { closeDialog(); setWhichDialog(''); },
+					onCancel: closeDialog,
 					centeredFooter: true
 				});
 			}, 100);
@@ -63,7 +57,6 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 
 	const handleSelectFromChild = (image: string | undefined) => {
 		closeDialog();
-		setWhichDialog('');
 		if(image) {
 			setImage(image);
 			onChange && onChange(false, image);
@@ -72,7 +65,6 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 
 	const handleUploadFromChild = () => {
 		closeDialog();
-		setWhichDialog('');
 		if (inputRef.current) inputRef.current.click();
 	}
 

@@ -5,8 +5,8 @@ interface ImagePreviewProps {
 	index: number;
 	imageSrc?: string | undefined;
 	fileName?: string;
-	onClick?: (index: number) => void;
-	onRemove?: (index: number) => void;
+	onClick?: () => void;
+	onRemove?: () => void;
 }
 
 type Ref = HTMLLIElement;
@@ -16,11 +16,12 @@ const ImagePreview = forwardRef<Ref, ImagePreviewProps>(({ index, imageSrc, file
 	const isValid = imageSrc !== 'NONE';
 
 	const handleClick = () => {
-		if(isValid && onClick) onClick(index);
+		if(isValid && onClick) onClick();
 	}
 
 	const handleRemove = () => {
-		onRemove && onRemove(index);
+		console.log('removing...',index);
+		onRemove && onRemove();
 	}
 
 	return (
@@ -28,8 +29,8 @@ const ImagePreview = forwardRef<Ref, ImagePreviewProps>(({ index, imageSrc, file
 			<div className='sai-preview__wrapper'>
 				<img className={`sai-preview__img${!isValid ? ' sai-preview__img--empty' : ''}`} src={isValid ? imageSrc : '/icons/empty-image.png'} onClick={handleClick} />
 			</div>
-			{fileName && (<span>{fileName}</span>)}
-			{isValid && (<span onClick={handleRemove}></span>)}
+			<span>{fileName && (<span>{fileName}</span>)}</span>
+			<span>{isValid ? (<span onClick={handleRemove}>x</span>) : ' '}</span>
 		</div>
 	);
 });

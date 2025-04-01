@@ -2,7 +2,7 @@
 
 // packages
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 // hooks
 import usePersistStore from '@/hooks/use-persist-store';
 // stores
@@ -20,7 +20,8 @@ import IntroInputImage from './_components/intro-input-image';
 import IntroInputUpload from './_components/intro-input-upload';
 
 const MAX_STEPS = 3;
-const API_URL = 'https://us-central1-api-skinstric-ai.cloudfunctions.net';
+//const API_URL = 'https://us-central1-api-skinstric-ai.cloudfunctions.net';
+const API_URL = 'https://us-central1-frontend-simplified.cloudfunctions.net';
 
 export default function Page() {
 	// states
@@ -29,9 +30,12 @@ export default function Page() {
 	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
 	// hooks
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const formStore = usePersistStore(useFormStore, (state) => state);
 	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
 	const demoStore = usePersistStore(useDemographicsStore, (state) => state);
+	// variables
+	const initStep = searchParams.get('s2') === 'y' ? 2 : 0;
 
 	const handlePrevStep = () => {
 		setStep((prev) => prev === 0 ? 0 : step - 1);
@@ -118,11 +122,17 @@ export default function Page() {
 		}
 	}
 
+	useEffect(() => {
+		if (initStep !== 0) setStep(initStep);
+	}, [initStep]);
+
 	return (
 		<>
 			<Header />
 			{(!loadingStates.processing && !loadingStates.uploading) ? (<main>
-				<div className='sai-heading top-20 left-8'>To start analysis</div>
+				<div className='sai-heading top-20 left-8'>
+					<strong>To start analysis</strong>
+				</div>
 				{step < 2 && (<>
 					<div className='sai-layer flex-col'>
 						<DottedBox />

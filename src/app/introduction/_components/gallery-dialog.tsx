@@ -1,22 +1,27 @@
 // packages
-import React from 'react';
+import React, { useEffect } from 'react';
+// hooks
+import usePersistStore from '@/hooks/use-persist-store';
+// stores
+import { useGalleryStore } from '@/stores/gallery-store';
 // components
-import ListItem from '@/components/list-item';
 import ImagePreview from '@/components/image-preview';
 
 const GalleryDialogHeader = ({ }) => {
 	return (
-		<div>Downloaded</div>
+		<div>Recently downloaded images</div>
 	);
 }
 
 interface GalleryDialogContentProps {
-	images: string[] | undefined;
 	onSelect?: (image: string | undefined) => void;
-	onRemove?: (index: number) => void;
 }
 
-const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ images, onSelect, onRemove }) => {
+const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ onSelect }) => {
+	// stores
+	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
+	// variables
+	const images = galleryStore?.gallery;	
 
 	// doesn't really matter, it's just only picking an image to process
 	// not really storing the selection (no need to persist this selection)
@@ -29,15 +34,11 @@ const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ images, onS
 		onSelect && onSelect(image);
 	}
 
-	const handleRemove = (index: number) => {
-		onRemove && onRemove(index);
-	}
-
 	return (
 		<>
 			<div className='flex justify-center gap-4'>
 				{[1,2,3].map((slot, index) => (<React.Fragment key={index}>
-					<ImagePreview index={index} imageSrc={images?.[index] ? images?.[index] : 'NONE'} onClick={(index) => handleSelect(images?.[index])} onRemove={(index) => handleRemove(index)} />
+					<ImagePreview index={index} imageSrc={images?.[index] ? images?.[index] : 'NONE'} onClick={() => handleSelect(images?.[index])} onRemove={() => galleryStore?.removeImage(images?.[index] ? images?.[index] : '')} />
 				</React.Fragment>))}
 			</div>
 		</>
