@@ -5,6 +5,8 @@ import './globals.css';
 import './quick.css';
 import './styles.css';
 import '../components/styles.css';
+import { Suspense } from 'react';
+import Loading from '@/components/loading';
 
 const roobert = localFont({
   src: [
@@ -58,7 +60,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${roobert.className}`}>
-        <div className='sai-container'>{children}</div>
+        <div className='sai-container'>
+          <Suspense fallback={<Loading content='Loading...' />}>
+            {children}
+          </Suspense>
+        </div>
         <div id='root-portal' />
       </body>
     </html>
