@@ -44,6 +44,10 @@ export default function Page() {
 		return () => clearTimeout(timer);
 	}, []);
 
+	useEffect(() => {
+		console.log(demoStore?.demographics)
+	}, [demoStore]);
+
 	return (
 		<>
 			{isLoading ? (<Loading content={<></>} />) : (<>
@@ -62,7 +66,7 @@ export default function Page() {
 							<h3>Predicted race & age</h3>
 						</div>
 						<div className='sai-layer__content sai-layer__content--analysis'>
-							<Tabs values={[demoSorted[0]?.items[0]?.label, demoSorted[1]?.items[0]?.label, demoSorted[2]?.items[0]?.label]} tabs={['Race', 'Age', 'Gender']} category={activeCategory} onChangeTab={(index) => handleChangeTab(index)} />
+							{demoStore ? (<Tabs values={[demoSorted[0]?.items[0]?.label, demoSorted[1]?.items[0]?.label, demoSorted[2]?.items[0]?.label]} tabs={['Race', 'Age', 'Gender']} category={activeCategory} onChangeTab={(index) => handleChangeTab(index)} />) : (<Tabs values={['White', '0-2', 'Male']} tabs={['Race', 'Age', 'Gender']} category={activeCategory} onChangeTab={(index) => handleChangeTab(index)} />)}
 							<Stats category={demoSorted?.[activeCategory]?.category} stats={demoSorted?.[activeCategory]} activeItem={activeItem} setActiveItem={setActiveItem} />
 						</div>
 					</div>
