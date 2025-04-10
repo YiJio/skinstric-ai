@@ -37,6 +37,7 @@ export default function Page() {
 	}
 
 	useEffect(() => {
+		document.body.classList.add('sai-analysis-fixed');
 		const timer = setTimeout(async () => {
 			setIsLoading(false);
 		}, 100);

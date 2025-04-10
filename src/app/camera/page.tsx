@@ -76,6 +76,7 @@ export default function Page() {
 	}
 
 	useEffect(() => {
+		document.body.classList.remove('sai-analysis-fixed');
 		const timer = setTimeout(async () => {
 			try {
 				setIsLoading(false);

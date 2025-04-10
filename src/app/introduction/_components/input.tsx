@@ -18,6 +18,7 @@ const WIDTH = 420;
 
 const Input = forwardRef<Ref, InputProps>(({ label, field, hint, placeholder, onChange, onSubmit }, ref) => {
 	// states
+	const [width, setWidth] = useState(0);
 	const [isTyping, setIsTyping] = useState(false);
 	// refs
 	const layerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +35,17 @@ const Input = forwardRef<Ref, InputProps>(({ label, field, hint, placeholder, on
 	}
 
 	useEffect(() => {
+		const handleResize = () => {
+			const isMobile = window.innerWidth <= 460;
+			if(isMobile) setWidth(window.innerWidth - 64);
+			else { setWidth(WIDTH); }
+		}
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => { window.removeEventListener('resize', handleResize); }
+	}, []);
+
+	useEffect(() => {
 		const animateLayer = async () => {
 			const { gsap } = await import('gsap');
 			if (layerRef.current) {
@@ -41,7 +53,7 @@ const Input = forwardRef<Ref, InputProps>(({ label, field, hint, placeholder, on
 				elements.forEach((element) => {
 					gsap.to(element, {
 						opacity: 1,
-						width: WIDTH,
+						width: width,
 						duration: 1,
 						ease: 'power2.out'
 					});
@@ -64,7 +76,7 @@ const Input = forwardRef<Ref, InputProps>(({ label, field, hint, placeholder, on
 		}
 		animateLayer();
 		return () => { animateLayerOut(); }
-	}, []);
+	}, [width]);
 
 	return (
 		<div ref={layerRef} className='sai-layer__content sai-form__section'>

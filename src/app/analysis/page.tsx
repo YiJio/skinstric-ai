@@ -1,18 +1,24 @@
 'use client';
 
 // packages
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 // css
 import './styles.css';
 // components
 import DottedBox from '@/components/dotted-box';
 import Header from '@/components/header';
+import Footer from '@/components/footer';
 import NavButton from '@/components/nav-button';
 import { Menu } from './_components';
 
 export default function Page() {
 	// hooks
 	const router = useRouter();
+
+	useEffect(() => {
+		document.body.classList.add('sai-analysis-fixed');
+	}, []);
 
 	return (
 		<>
@@ -25,18 +31,13 @@ export default function Page() {
 						<span>Fix estimated information if needed.</span>
 					</div>
 				</div>
-				<div className='sai-layer h-flex h-fc'>
+				<div className='sai-layer sai-layer--dot'>
 					<DottedBox isAnimated={false} />
 				</div>
 				<div className='sai-layer'>
 					<Menu />
 				</div>
-				<div className='sai-stepnav bottom-8 left-8'>
-					<NavButton position='left' label='Back' onClick={() => router.push('/introduction?s2=y')} noMargin />
-				</div>
-				<div className='sai-stepnav bottom-8 right-8'>
-					<NavButton position='right' label='Get summary' onClick={() => router.push('/analysis/demographics')} noMargin />
-				</div>
+				<Footer left={<NavButton position='left' label='Back' onClick={() => router.push('/introduction?s2=y')} noMargin />} right={<NavButton position='right' label='Get summary' onClick={() => router.push('/analysis/demographics')} noMargin />} />
 			</main>
 		</>
 	);

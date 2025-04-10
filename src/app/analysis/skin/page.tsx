@@ -19,6 +19,7 @@ export default function Page() {
 	const router = useRouter();
 
 	useEffect(() => {
+		document.body.classList.add('sai-analysis-fixed');
 		const timer = setTimeout(async () => {
 			setIsLoading(false);
 		}, 100);

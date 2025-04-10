@@ -50,8 +50,8 @@
 .h-pr-1 { padding-right:4px; }
 .h-pl-4 { padding-left:16px; }
 .h-pr-4 { padding-right:16px; }
-.h-pl-10 { margin-left:40px; }
-.h-pr-10 { margin-right:40px; }
+.h-pl-10 { padding-left:40px; }
+.h-pr-10 { padding-right:40px; }
 
 /* ------------------------------------ */
 /*   GAPS                               */

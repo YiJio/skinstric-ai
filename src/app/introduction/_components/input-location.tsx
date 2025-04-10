@@ -20,6 +20,7 @@ const WIDTH = 420;
 
 const InputLocation = forwardRef<Ref, InputLocationProps>(({ label, field, hint, placeholder, onChange, onSubmit }, ref) => {
 	// states
+	const [width, setWidth] = useState(0);
 	const [isTyping, setIsTyping] = useState(false);
 	const [place, setPlace] = useState('');
 	// refs
@@ -44,20 +45,32 @@ const InputLocation = forwardRef<Ref, InputLocationProps>(({ label, field, hint,
 	}
 
 	useEffect(() => {
-		const animateLayer = async () => {
-			const { gsap } = await import('gsap');
-			if (layerRef.current) {
-				const elements = layerRef.current.querySelectorAll('.sai-layer__element');
-				elements.forEach((element) => {
-					gsap.to(element, {
-						opacity: 1,
-						width: WIDTH,
-						duration: 1,
-						ease: 'power2.out'
-					});
-				});
-			}
+		const handleResize = () => {
+			const isMobile = window.innerWidth <= 460;
+			if (isMobile) setWidth(window.innerWidth - 64);
+			else { setWidth(WIDTH); }
 		}
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => { window.removeEventListener('resize', handleResize); }
+	}, []);
+
+	const animateLayer = async () => {
+		const { gsap } = await import('gsap');
+		if (layerRef.current) {
+			const elements = layerRef.current.querySelectorAll('.sai-layer__element');
+			elements.forEach((element) => {
+				gsap.to(element, {
+					opacity: 1,
+					width: width,
+					duration: 1,
+					ease: 'power2.out'
+				});
+			});
+		}
+	}
+
+	useEffect(() => {
 		const animateLayerOut = async () => {
 			const { gsap } = await import('gsap');
 			if (layerRef.current) {
@@ -89,8 +102,12 @@ const InputLocation = forwardRef<Ref, InputLocationProps>(({ label, field, hint,
 		}
 	}, [isLoaded]);
 
+	useEffect(() => {
+		animateLayer();
+	}, [width]);
+
 	if (!isLoaded) return <div className='sai-layer__content'>
-		<form/>
+		<form />
 	</div>;
 
 	return (

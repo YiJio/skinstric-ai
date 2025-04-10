@@ -1,10 +1,17 @@
+'use client';
+
 // packages
+import { useEffect } from 'react';
 // components
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { HomeIntro } from './_components';
 
 export default function Home() {
+
+  useEffect(() => {
+		document.body.classList.remove('sai-analysis-fixed');
+  }, []);
   
   return (
     <>

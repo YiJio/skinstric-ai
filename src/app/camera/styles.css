@@ -25,3 +25,10 @@
 /*   SNAP                               */
 /* ------------------------------------ */
 .sai-snap { top:50%; right:2rem; transform:translateY(-50%); align-items:center; gap:1rem; cursor:pointer; }
+
+@media (max-width:600px) {
+  .sai-rules { bottom:5rem; }
+	.sai-rules ul { flex-direction:column; align-items:center; }
+	.sai-rules ul.h-gap-5 { gap:8px; }
+	.sai-snap { flex-direction:column; gap:0.5rem; bottom:6.5rem; right:50%; transform:translate(50%, 50%); }
+}

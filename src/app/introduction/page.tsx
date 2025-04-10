@@ -135,6 +135,10 @@ export default function Page() {
 	}
 
 	useEffect(() => {
+		document.body.classList.remove('sai-analysis-fixed');
+	}, []);
+
+	useEffect(() => {
 		if (initStep !== 0) setStep(initStep);
 	}, [initStep]);
 
@@ -174,7 +178,7 @@ export default function Page() {
 						<DottedBox width={320} />
 						<DottedBox width={320} />
 					</div>
-					<div className='sai-layer'>
+					<div className='sai-layer sai-layer--graph'>
 						<InputCamera content={<>Allow A.I.<br />to scan your face</>} isCamera />
 						<InputUpload content={<>Allow A.I.<br />to access gallery</>} onChange={(isNew, image) => handleImageChange(isNew, image)} />
 					</div>

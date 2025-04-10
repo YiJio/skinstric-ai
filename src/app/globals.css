@@ -2,8 +2,6 @@
 /*   G L O B A L   S T Y L E S          */
 /* ==================================== */
 
-@import "tailwindcss";
-
 :root {
   --color-white:#ffffff;
   --color-primary:#1A1B1C;
@@ -42,18 +40,21 @@
 
 :focus { outline:0; }
 ::selection { background-color:rgb(var(--color-gray-0) / 30%); }
+* { padding:0; margin:0; outline:0; border:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 
 body { display:flex; background:var(--background); color:var(--foreground); width:100%; height:100%; position:fixed; top:0; left:0; overflow:clip; }
 main { position:relative; display:flex; flex-direction:column; flex:1 1 auto; }
 
+a { color:var(--color-primary); text-decoration:none; }
 li { display:flex; align-items:baseline; gap:8px; }
 li img { width:12px; }
 li > div { flex:1; display:flex; flex-direction:column; }
-button { cursor:pointer; }
+button { background:transparent; cursor:pointer; }
 
 form { position:relative; border-bottom:1px solid var(--color-primary); }
 label { text-align:center; font-size:clamp(44px,12px + 2.5vw,60px); transition:opacity 0.2s ease; }
-input { padding:4px 0; text-align:center; color:var(--color-primary); font-size:clamp(44px,12px + 2.5vw,60px); line-height:1; }
+input { padding:4px 0; text-align:center; background:transparent; color:var(--color-primary); font-size:clamp(44px,12px + 2.5vw,60px); line-height:1; }
 input:focus ~ label, .is-hidden { opacity:0; pointer-events:none; transition:opacity 0.2s ease; }
 button { font-size:14px; text-transform:uppercase; }
 
@@ -82,6 +83,8 @@ button { font-size:14px; text-transform:uppercase; }
 /*   LAYER                              */
 /* ------------------------------------ */
 .sai-layer { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; }
+.sai-layer--dot { display:flex;  flex-direction:column; }
+.sai-layer--graph { }
 .sai-layer__content { position:relative; margin:auto; }
 .sai-layer__content--analysis { margin:18rem 32px auto; width:100vw; display:flex; gap:16px; }
 .sai-layer__element { width:0; opacity:0; overflow:hidden; white-space:nowrap; }
@@ -90,7 +93,7 @@ button { font-size:14px; text-transform:uppercase; }
 /* ------------------------------------ */
 /*   FORM                               */
 /* ------------------------------------ */
-.sai-form__section { display:flex; flex-direction:column; gap:4px; max-width:30vw; }
+.sai-form__section { display:flex; flex-direction:column; gap:4px; }
 .sai-form__help { text-transform:uppercase; color:rgb(var(--color-gray-0)); text-align:center; font-size:14px; }
 
 .auto { position:relative; width:100%; }
@@ -107,7 +110,8 @@ button { font-size:14px; text-transform:uppercase; }
 /* ------------------------------------ */
 /*   BUTTON GROUP                       */
 /* ------------------------------------ */
-.sai-button-group { display:flex; gap:8px; }
+.sai-button-group { display:flex; gap:16px; }
+.sai-button-group button:not(.sai-page-btn) { height:36px; }
 
 /* ------------------------------------ */
 /*   BUTTON                             */
@@ -124,3 +128,27 @@ button { font-size:14px; text-transform:uppercase; }
 .sai-button--black:hover { background:rgb(var(--color-gray-2)); }
 .sai-button--white { background:var(--color-white); color:var(--color-primary); outline:1px solid var(--color-primary); outline-offset:-1px; }
 .sai-button--white:hover { background:rgb(var(--color-gray-0) / 20%); }
+
+
+@media (max-width:1024px) {
+  .sai-analysis-fixed { position:initial; overflow:auto; height:100vh; }
+  .sai-analysis-fixed .sai-container { width:100%; }
+  .sai-analysis-fixed .sai-layer { position:initial; }
+  .sai-layer__content--analysis { padding-bottom:32px; }
+}
+
+@media (max-width:768px) {
+  .sai-heading { width:100%; max-width:calc(100% - 64px); }
+  .sai-heading h1 { justify-content:space-between; gap:4px; flex-direction:column-reverse; }
+  .sai-heading .sai-button-group { flex:1; justify-content:flex-end; }
+  .sai-layer__content--analysis { flex-direction:column; }
+  .sai-rbg { display:none; }
+}
+
+@media (max-width:600px) {
+  .sai-wrapper { padding:0; height:100vh; }
+  .sai-heading h1 { font-size:clamp(2rem, 10vw, 3.5rem); }
+  .sai-layer--dot { display:none; }
+  .sai-layer--graph { flex-direction:column; margin:12rem 0; height:calc(100vh - 24rem); }
+  .sai-layer__content--analysis { margin-top:15rem; }
+}

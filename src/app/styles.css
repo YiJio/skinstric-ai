@@ -34,3 +34,16 @@
 /* BUTTONS ---------------------------- */
 .sai-home-nav__anchor:hover ~ .sai-home-nav__dot:before { opacity:0.5; transform:translate(-50%, -50%) scale(1.1); }
 .sai-home-nav__anchor:hover ~ .sai-home-nav__dot:after { opacity:0.3; transform:translate(-50%, -50%) scale(1.2); }
+
+
+@media (max-width:768px) {
+	.sai-home { height:calc(100vh - 64px); }
+	.sai-home-nav--left { display:none; }
+  .sai-home-nav--right { position:initial; }
+}
+
+@media (max-width:600px) {
+	.sai-home { flex-direction:column; position:absolute; top:0; left:0; width:100%; height:100%; gap:56px; }
+	.sai-home__wrapper { margin:36vh auto 1rem; position:initial; }
+	.sai-home__title { margin:0 auto; }
+}
