@@ -1,0 +1,27 @@
+/* ==================================== */
+/*   Q U I C K   S T Y L E S            */
+/* ==================================== */
+
+/* ------------------------------------ */
+/*   FLEX                               */
+/* ------------------------------------ */
+
+.h-flex { display:flex; }
+.h-ac { align-items:center; }
+.h-as { align-items:flex-start; }
+.h-ae { align-items:flex-end; }
+.h-ab { align-items:baseline; }
+.h-jc { justify-content:center; }
+.h-js { justify-content:flex-start; }
+.h-je { justify-content:flex-end; }
+.h-jb { justify-content:baseline; }
+.h-jsb { justify-content:space-between; }
+.h-fc { flex-direction:column; }
+.h-fr { flex-direction:row; }
+.h-wrap { flex-wrap:wrap; }
+
+/* ------------------------------------ */
+/*   HELPERS                            */
+/* ------------------------------------ */
+.h-inverted { filter:invert(1); }
+.h-flipped { transform:scale(-1); }

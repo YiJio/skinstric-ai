@@ -1,0 +1,51 @@
+/* ==================================== */
+/*   C O M P O N E N T   S T Y L E S    */
+/* ==================================== */
+
+/* ------------------------------------ */
+/*   MENU                               */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-menu { position:relative; margin:auto; width:364px; height:364px; }
+/* OPTION ----------------------------- */
+.sai-menu__option { position:absolute; width:148px; height:148px; background:rgb(var(--color-gray-1) / 10%); transition:background 0.2s ease; cursor:pointer; }
+.sai-menu__option:hover { background:rgb(var(--color-gray-1) / 25%); transition:background 0.2s ease; }
+.sai-menu__option:first-child { top:0; left:50%; transform:translateX(-50%) rotate(45deg); }
+.sai-menu__option:nth-child(2) { top:50%; left:0; transform:translateY(-50%) rotate(45deg); }
+.sai-menu__option:nth-child(3) { top:50%; right:0; transform:translateY(-50%) rotate(45deg); }
+.sai-menu__option:last-child { bottom:0; left:50%; transform:translateX(-50%) rotate(45deg); }
+/* TITLE ------------------------------ */
+.sai-menu__title { position:absolute; top:50%; left:50%; display:flex; align-items:center; justify-content:center; text-align:center; text-transform:uppercase; transform:translate(-50%,-50%) rotate(-45deg); }
+
+/* ------------------------------------ */
+/*   STATS                              */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-stats { display:flex; gap:16px; flex:1; font-size:16px; }
+.sai-stats > div { border-top:2px solid var(--color-primary); background:rgb(var(--color-gray-1) / 10%); line-height:1; }
+/* SCORE ------------------------------ */
+.sai-stats__score { flex:1; padding:20px; }
+/* LABEL ------------------------------ */
+.sai-stats__label { font-size:40px; letter-spacing:0.05em; }
+/* LIST ------------------------------- */
+.sai-stats__list { width:440px; }
+/* ITEM ------------------------------- */
+.sai-stats__item { padding:20px; display:flex; justify-content:space-between; text-transform:uppercase; }
+/* VALUE ------------------------------ */
+.sai-stats__value { padding:0 20px; height:48px; display:flex; align-items:center; justify-content:space-between; text-transform:capitalize; transition:background 0.2s ease; cursor:pointer; }
+.sai-stats__value > div { display:flex; gap:12px; }
+.sai-stats__value:not(.isActive):hover { background:rgb(var(--color-gray-1) / 25%); transition:background 0.2s ease; }
+.sai-stats__value.isActive { background:var(--color-primary); color:var(--color-white); }
+
+/* ------------------------------------ */
+/*   TABS                               */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-tabs { display:flex; flex-direction:column; gap:12px; width:200px; text-transform:uppercase; }
+/* TAB -------------------------------- */
+.sai-tabs__tab { padding:16px; width:100%; height:100px; line-height:1; display:flex; flex-direction:column; justify-content:space-between; border-top:2px solid var(--color-primary); background:rgb(var(--color-gray-1) / 10%); transition:background 0.2s ease; cursor:pointer; }
+.sai-tabs__tab:hover { background:rgb(var(--color-gray-1) / 25%); transition:background 0.2s ease; }
+.sai-tabs__tab.isActive { background:var(--color-primary); color:var(--color-white); }

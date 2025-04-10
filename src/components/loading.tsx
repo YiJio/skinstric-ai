@@ -54,7 +54,6 @@ const Loading = forwardRef<Ref, LoadingProps>(({ width = 400, content, other, is
 
 	useEffect(() => {
 		animateLayer();
-		//return () => { animateLayerOut(); }
 	}, [content]);
 
 	useEffect(() => {

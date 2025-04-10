@@ -1,3 +1,5 @@
+'use client';
+
 // packages
 import React, { useEffect } from 'react';
 // hooks
@@ -7,10 +9,8 @@ import { useGalleryStore } from '@/stores/gallery-store';
 // components
 import ImagePreview from '@/components/image-preview';
 
-const GalleryDialogHeader = ({ }) => {
-	return (
-		<div>Recently downloaded images</div>
-	);
+const GalleryDialogHeader = () => {
+	return (<>Recently downloaded images</>);
 }
 
 interface GalleryDialogContentProps {
@@ -36,8 +36,8 @@ const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ onSelect })
 
 	return (
 		<>
-			<div className='flex justify-center gap-4'>
-				{[1,2,3].map((slot, index) => (<React.Fragment key={index}>
+			<div className='sai-gallery'>
+				{[1,2,3].map((_, index) => (<React.Fragment key={index}>
 					<ImagePreview index={index} imageSrc={images?.[index] ? images?.[index] : 'NONE'} onClick={() => handleSelect(images?.[index])} onRemove={() => galleryStore?.removeImage(images?.[index] ? images?.[index] : '')} />
 				</React.Fragment>))}
 			</div>

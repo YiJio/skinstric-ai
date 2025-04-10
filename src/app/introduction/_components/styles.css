@@ -1,0 +1,53 @@
+/* ==================================== */
+/*   C O M P O N E N T   S T Y L E S    */
+/* ==================================== */
+
+/* ------------------------------------ */
+/*   GALLERY                            */
+/* ------------------------------------ */
+.sai-gallery { display:flex; justify-content:center; gap:1rem; }
+
+/* ------------------------------------ */
+/*   GRAPH                              */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-graph { position:absolute; display:grid; grid-template-rows:repeat(2, minmax(0, 1fr)); grid-template-columns:repeat(2, minmax(0, 1fr)); pointer-events:none; }
+/* QUADRANT --------------------------- */
+.sai-graph__quadrant { position:relative; }
+.sai-graph__quadrant--tr { grid-column:2 / 3; }
+.sai-graph__quadrant--bl { grid-row:2 / 3; }
+.sai-graph__quadrant:before { position:absolute; content:''; width:50%; height:1px; background:var(--color-primary); }
+.sai-graph__quadrant--tr:before { left:0; bottom:0; transform-origin:left; transform:rotate(-45deg) translate(72%, 50%); }
+.sai-graph__quadrant--bl:before { right:0; top:0; transform-origin:right; transform:rotate(-45deg) translate(-72%, 50%); }
+/* POINT ------------------------------ */
+.sai-graph__point { position:absolute; width:100%; text-transform:uppercase; font-size:10px; line-height:16px; }
+.sai-graph__point--tr { top:52px; left:112px; }
+.sai-graph__point--bl { bottom:36px; right:112px; text-align:right; }
+.sai-graph__point:after { position:absolute; content:''; top:6px; width:6px; height:6px; border-radius:50%; outline:1px solid var(--color-primary); background:var(--color-white); }
+.sai-graph__point--tr:after { left:-16px; }
+.sai-graph__point--bl:after { right:-16px; }
+
+/* ------------------------------------ */
+/*   IMAGE SLOT                         */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-imgslot { position:relative; display:flex; align-items:center; justify-content:center; width:100%; height:100%; }
+/* IMAGE ------------------------------ */
+.sai-imgslot__img img { cursor:pointer; transition:transform 0.3s ease-in-out; }
+.sai-imgslot__img:hover img { transform:scale(0.9); transition:transform 0.3s ease-in-out; }
+.sai-imgslot__img--cam { position:relative; }
+.sai-imgslot__img--cam:hover img { transform:scale(0.9) rotate(45deg); }
+
+/* ------------------------------------ */
+/*   INPUT                              */
+/* ------------------------------------ */
+.sai-input { letter-spacing:-0.05em; width:100%; }
+
+/* ------------------------------------ */
+/*   LABEL                              */
+/* ------------------------------------ */
+.sai-label { position:absolute; top:-0.25em; left:0; width:100%; height:100%; cursor:text; text-align:center; letter-spacing:-0.05em; }
+
+

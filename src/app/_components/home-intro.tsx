@@ -2,14 +2,16 @@
 
 // packages
 import React, { useState, useRef, useEffect } from 'react';
+// css
+import './styles.css';
 // components
-import HomeTitleNav from './home-title-nav';
-import HomeTitleSpan from './home-title-span';
+import Heading from './heading';
+import Nav from './nav';
 
-interface HomeTitleProps {
+interface HomeIntroProps {
 }
 
-const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
+const HomeIntro: React.FC<HomeIntroProps> = ({ }) => {
 	// states
 	const [position, setPosition] = useState('center');
 	// refs
@@ -28,7 +30,7 @@ const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
 		setPosition('center');
 	}
 
-	/*useEffect(() => {
+	useEffect(() => {
 		if (leftRef.current) {
 			leftRef.current.addEventListener('mouseenter', () => handleMouseEnter('left'));
 			leftRef.current.addEventListener('mouseleave', handleMouseLeave);
@@ -47,7 +49,7 @@ const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
 				rightRef.current.removeEventListener('mouseleave', handleMouseLeave);
 			}
 		}
-	}, [leftRef, rightRef]);*/
+	}, [leftRef, rightRef]);
 
 	useEffect(() => {
 		if(containerRef.current && textRef.current && text2Ref.current) {
@@ -66,17 +68,17 @@ const HomeTitle: React.FC<HomeTitleProps> = ({ }) => {
 	}, [position]);
 
 	return (
-		<div ref={containerRef} className='w-full h-full flex'>
-			<HomeTitleNav ref={leftRef} position='left' href='' label='Discover A.I.' isOtherHovered={position === 'right'} isDisabled />
-			<div className='m-auto text-center'>
-				<div className='font-normal text-[92px] leading-[0.945] tracking-[-6px]'>
-					<HomeTitleSpan ref={textRef} text='Sophiscated' /><br/>
-					<HomeTitleSpan ref={text2Ref} text='Skincare' />
+		<div ref={containerRef} className='sai-home'>
+			<Nav ref={leftRef} position='left' href='' label='Discover A.I.' isOtherHovered={position === 'right'} isDisabled />
+			<div className='sai-home__wrapper'>
+				<div className='sai-home__title'>
+					<Heading ref={textRef} text='Sophiscated' /><br/>
+					<Heading ref={text2Ref} text='Skincare' />
 				</div>
 			</div>
-			<HomeTitleNav ref={rightRef} position='right' href='/introduction' label='Take test' isOtherHovered={position === 'left'} />
+			<Nav ref={rightRef} position='right' href='/introduction' label='Take test' isOtherHovered={position === 'left'} />
 		</div>
 	);
 }
 
-export default HomeTitle;
+export default HomeIntro;

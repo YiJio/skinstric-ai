@@ -14,10 +14,7 @@ import DottedBox from '@/components/dotted-box';
 import Header from '@/components/header';
 import Loading from '@/components/loading';
 import NavButton from '@/components/nav-button';
-import IntroInput from './_components/intro-input';
-import IntroInputLocation from './_components/intro-input-location';
-import IntroInputImage from './_components/intro-input-image';
-import IntroInputUpload from './_components/intro-input-upload';
+import { Input, InputLocation, InputCamera, InputUpload } from './_components';
 
 const MAX_STEPS = 3;
 //const API_URL = 'https://us-central1-api-skinstric-ai.cloudfunctions.net';
@@ -26,7 +23,8 @@ const API_URL = 'https://us-central1-frontend-simplified.cloudfunctions.net';
 export default function Page() {
 	// states
 	const [step, setStep] = useState(0);
-	const [image, setImage] = useState('');
+	const [formFields, setFormFields] = useState({ name: '', location: '' }); // temp
+	const [image, setImage] = useState(''); // temp
 	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
 	// hooks
 	const router = useRouter();
@@ -55,6 +53,12 @@ export default function Page() {
 			return formStore?.name !== '' && formStore?.location !== '';
 		}
 		return true;
+	}
+
+	const handleFormChange = (field: string, value: string) => {
+		setFormFields((prev) => ({ ...prev, [field]: value }));
+		if(field === 'name') { formStore?.setName(value); }
+		else { formStore?.setLocation(value); }
 	}
 
 	const handleSubmitForm = async () => {
@@ -126,11 +130,17 @@ export default function Page() {
 		if (initStep !== 0) setStep(initStep);
 	}, [initStep]);
 
+	useEffect(() => {
+		if(formStore) {
+			setFormFields({ name: formStore.name, location: formStore.location });
+		}
+	}, [formStore]);
+
 	return (
 		<>
 			<Header />
 			{(!loadingStates.processing && !loadingStates.uploading) ? (<main>
-				<div className='sai-heading top-20 left-8'>
+				<div className='sai-heading'>
 					<strong>To start analysis</strong>
 				</div>
 				{step < 2 && (<>
@@ -138,8 +148,8 @@ export default function Page() {
 						<DottedBox />
 					</div>
 					<div className='sai-layer'>
-						{step === 0 && (<IntroInput label='name' field={formStore?.name} hint='Introduce yourself' onChange={formStore?.setName} onSubmit={handleNextStep} />)}
-						{step === 1 && (<IntroInputLocation label='location' field={formStore?.location} hint='Where are you from?' placeholder='Enter a location' onChange={formStore?.setLocation} onSubmit={handleSubmitForm} />)}
+						{step === 0 && (<Input label='name' field={formFields?.name} hint='Introduce yourself' onChange={(value) => handleFormChange('name', value)} onSubmit={handleNextStep} />)}
+						{step === 1 && (<InputLocation label='location' field={formFields?.location} hint='Where are you from?' placeholder='Enter a location' onChange={(value) => handleFormChange('location', value)} onSubmit={handleSubmitForm} />)}
 					</div>
 				</>)}
 				{step === 2 && (<>
@@ -148,8 +158,8 @@ export default function Page() {
 						<DottedBox width={320} />
 					</div>
 					<div className='sai-layer'>
-						<IntroInputImage content={<>Allow A.I.<br />to scan your face</>} isCamera />
-						<IntroInputUpload content={<>Allow A.I.<br />to access gallery</>} onChange={(isNew, image) => handleImageChange(isNew, image)} />
+						<InputCamera content={<>Allow A.I.<br />to scan your face</>} isCamera />
+						<InputUpload content={<>Allow A.I.<br />to access gallery</>} onChange={(isNew, image) => handleImageChange(isNew, image)} />
 					</div>
 				</>)}
 				{step !== 0 && (<div className='sai-stepnav bottom-8 left-8'>

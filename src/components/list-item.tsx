@@ -13,7 +13,7 @@ const ListItem = forwardRef<Ref, ListItemProps>(({ description, more, inverse },
 
 	return (
 		<li ref={ref}>
-			<img className='h-inverted' src='/icons/radio-idle.svg' />
+			<img className={`${inverse ? 'h-inverted' : ''}`} src='/icons/radio-idle.svg' />
 			<div>
 				<span>{description}</span>
 				{more && <small>{more}</small>}

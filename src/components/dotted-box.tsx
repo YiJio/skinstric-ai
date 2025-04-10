@@ -2,6 +2,8 @@
 
 // packages
 import React, { useEffect, useRef } from 'react';
+// css
+import './styles.css';
 
 interface DottedBoxProps {
 	width?: number;

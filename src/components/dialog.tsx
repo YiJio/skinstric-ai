@@ -2,13 +2,15 @@
 
 // packages
 import React, { forwardRef, ReactNode, useEffect, useRef } from 'react';
+// css
+import './styles.css';
 
 export interface DialogProps {
 	header: ReactNode;
 	content: ReactNode;
 	width?: number;
 	height?: number;
-	centeredFooter?: boolean;
+	buttonStyle?: number;
 	cancelText?: string;
 	confirmText?: string;
 	onCancel?: () => void;
@@ -17,7 +19,7 @@ export interface DialogProps {
 
 type Ref = HTMLDialogElement;
 
-const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'Confirm', cancelText = 'Cancel', onConfirm, onCancel, width = 320, height = 320, centeredFooter = false }, ref) => {
+const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'Confirm', cancelText = 'Cancel', onConfirm, onCancel, width = 320, height = 320, buttonStyle }, ref) => {
 	// states
 
 	// refs
@@ -90,11 +92,11 @@ const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'C
 				<div ref={wrapperRef} className='sai-dialog__wrapper'>
 					<div className='sai-dialog__header'>{header}</div>
 					<div className='sai-dialog__content'>{content}</div>
-					<div className={`sai-dialog__footer ${centeredFooter ? 'justify-center' : 'justify-end'}`}>
-						<button onClick={() => handleAction(0)}>
+					<div className='sai-dialog__footer'>
+						<button className='sai-button sai-button--aside' onClick={() => handleAction(0)}>
 							<span>{cancelText}</span>
 						</button>
-						<button className={centeredFooter ? 'sai-button sai-button--primary' : ''} onClick={() => handleAction(1)}>
+						<button className={`sai-button${buttonStyle === 1 ? ' sai-button--outline' : ''}`} onClick={() => handleAction(1)}>
 							<span>{confirmText}</span>
 						</button>
 					</div>

@@ -2,6 +2,8 @@
 
 // packages
 import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
+// css
+import './styles.css';
 // hooks
 import { useDialog } from '@/hooks/use-dialog';
 // components
@@ -9,7 +11,7 @@ import Dialog from '@/components/dialog';
 import { UploadRulesDialogContent, UploadRulesDialogHeader } from './upload-rules-dialog';
 import { GalleryDialogContent, GalleryDialogHeader } from './gallery-dialog';
 
-interface IntroInputUploadProps {
+interface InputUploadProps {
 	width?: number;
 	content?: ReactNode;
 	onChange?: (isNew: boolean, file: any) => void;
@@ -17,7 +19,7 @@ interface IntroInputUploadProps {
 
 type Ref = HTMLInputElement;
 
-const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, width = 320, onChange }, ref) => {
+const InputUpload = forwardRef<Ref, InputUploadProps>(({ content, width = 320, onChange }, ref) => {
 	// states
 	const [image, setImage] = useState<string | undefined>('');
 	// refs
@@ -43,13 +45,13 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 			setTimeout(() => {
 				openDialog({
 					width: 400,
-					height: 260,
+					height: 254,
 					header: <GalleryDialogHeader />,
 					content: <GalleryDialogContent onSelect={(image) => handleSelectFromChild(image)} />,
 					confirmText: 'Upload new',
 					onConfirm: handleUploadFromChild,
 					onCancel: closeDialog,
-					centeredFooter: true
+					buttonStyle: 1,
 				});
 			}, 100);
 		}
@@ -91,13 +93,13 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 
 	return (
 		<div ref={layerRef} className='sai-layer__content' style={{ flex: '1' }}>
-			<div className='sai-imginput'>
-				<div className='sai-datagrid' style={{ width: width + 'px', height: width + 'px' }}>
-					<div className='sai-dataquad sai-dataquad--bl'>
-						<div className='sai-datapt sai-datapt--bl'>{content}</div>
+			<div className='sai-imgslot'>
+				<div className='sai-graph' style={{ width: width + 'px', height: width + 'px' }}>
+					<div className='sai-graph__quadrant sai-graph__quadrant--bl'>
+						<div className='sai-graph__point sai-graph__point--bl'>{content}</div>
 					</div>
 				</div>
-				<div className='sai-imginput__img'>
+				<div className='sai-imgslot__img'>
 					<img src='/icons/gallery-icon.svg' onClick={() => handleOpen('rules')} />
 					<input ref={inputRef} type='file' accept='image/*' onChange={handleImageUpload} hidden />
 				</div>
@@ -107,4 +109,4 @@ const IntroInputUpload = forwardRef<Ref, IntroInputUploadProps>(({ content, widt
 	);
 });
 
-export default IntroInputUpload;
+export default InputUpload;

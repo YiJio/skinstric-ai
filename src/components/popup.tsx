@@ -24,7 +24,8 @@ const Popup = forwardRef<Ref, PopupProps>(({ content, confirmText = 'Confirm', c
 	// opening animation
 	const openPopupAnimation = async () => {
 		const { gsap } = await import('gsap');
-		if (popupRef.current) {
+		if (popupRef.current && !isOpen) {
+			console.log('here?')
 			gsap.to(popupRef.current, {
 				opacity: 1,
 				duration: 0.3,
@@ -37,7 +38,7 @@ const Popup = forwardRef<Ref, PopupProps>(({ content, confirmText = 'Confirm', c
 	// closing animation
 	const closePopupAnimation = async () => {
 		const { gsap } = await import('gsap');
-		//console.log('ty close')
+		console.log('ty close')
 		if (popupRef.current) {
 			gsap.to(popupRef.current, {
 				opacity: 0,
@@ -56,22 +57,18 @@ const Popup = forwardRef<Ref, PopupProps>(({ content, confirmText = 'Confirm', c
 		}, 1000);
 	}
 
-	const togglePopup = () => {
-		setIsOpen((prev) => !prev);
-	}
-
 	useEffect(() => {
 		const parent = popupRef.current?.parentElement;
 		if (parent) {
-			parent.addEventListener('click', togglePopup);
-			return () => parent.removeEventListener('click', togglePopup)
+			parent.addEventListener('click', openPopupAnimation);
+			return () => parent.removeEventListener('click', openPopupAnimation)
 		}
 	}, []);
 
 	useEffect(() => {
 		const handleOutsideClick = (e: any) => {
 			if (popupRef.current && !popupRef.current.contains(e.target)) {
-				setIsOpen(false);
+				closePopupAnimation();
 			}
 		}
 		document.addEventListener('mousedown', handleOutsideClick);
@@ -80,14 +77,14 @@ const Popup = forwardRef<Ref, PopupProps>(({ content, confirmText = 'Confirm', c
 
 	return (
 		<>
-			<div ref={popupRef} className={`sai-popup`} style={{ pointerEvents: isOpen ? 'auto' : 'none', opacity: isOpen ? '1' : '0' }}>
+			<div ref={popupRef} className={`sai-popup`} style={{ pointerEvents: isOpen ? 'auto' : 'none' }}>
 				<div className='sai-popup__wrapper'>
 					<div className='sai-popup__content'>{content}</div>
 					<div className='sai-popup__footer'>
-						<button onClick={() => handleAction(0)}>
+						<button className='sai-button sai-button--aside' onClick={() => handleAction(0)}>
 							<span>{cancelText}</span>
 						</button>
-						<button onClick={() => handleAction(1)}>
+						<button className='sai-button' onClick={() => handleAction(1)}>
 							<span>{confirmText}</span>
 						</button>
 					</div>

@@ -1,0 +1,36 @@
+/* ==================================== */
+/*   C O M P O N E N T   S T Y L E S    */
+/* ==================================== */
+
+/* ------------------------------------ */
+/*   MAIN                               */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-home { width:100%; height:100%; display:flex; }
+/* WRAPPER ---------------------------- */
+.sai-home__wrapper { margin:auto; text-align:center; }
+/* TITLE ------------------------------ */
+.sai-home__title { font-weight:normal; font-size:92px; line-height:0.945; letter-spacing:-6px; }
+/* HEADING ---------------------------- */
+.sai-home__heading { display:inline-block; will-change:transform; transition:0.7s ease-in-out; }
+
+/* ------------------------------------ */
+/*   NAV                                */
+/* ------------------------------------ */
+
+/* CONTAINER -------------------------- */
+.sai-home-nav { position:absolute; top:50%; transition:opacity 0.3s ease-in-out; }
+.sai-home-nav--left { left:0; transform:translateY(-50%); }
+.sai-home-nav--right { right:0; transform:translateY(-50%); }
+
+/* DOT BG ----------------------------- */
+.sai-home-nav__dot { position:absolute; top:50%; width:30vw; height:30vw; will-change:transform; transform:rotate(45deg); pointer-events:none; }
+.sai-home-nav__dot--left { left:0; transform:translate(-50%, -50%) rotate(45deg); }
+.sai-home-nav__dot--right { right:0; transform:translate(50%, -50%) rotate(45deg); }
+.sai-home-nav__dot:before,
+.sai-home-nav__dot:after { position:absolute; content:''; top:50%; left:50%; width:100%; height:100%; background:var(--repeating-background); background-position:0 0, 0 0, 100% 0, 0 100%; background-repeat:no-repeat; background-size:1px 100%, 100% 1px, 1px 100%, 100% 1px; transform:translate(-50%, -50%); opacity:0.5; transition:transform 0.3s cubic-bezier(.08,.5,.44,.96) calc(0.3s/2), opacity 0s ease calc(0.3s/2); }
+
+/* BUTTONS ---------------------------- */
+.sai-home-nav__anchor:hover ~ .sai-home-nav__dot:before { opacity:0.5; transform:translate(-50%, -50%) scale(1.1); }
+.sai-home-nav__anchor:hover ~ .sai-home-nav__dot:after { opacity:0.3; transform:translate(-50%, -50%) scale(1.2); }

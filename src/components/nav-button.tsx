@@ -2,7 +2,8 @@
 
 // packages
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { MdArrowLeft, MdArrowRight } from 'react-icons/md';
+// css
+import './styles.css';
 
 interface NavButtonProps {
 	position: string;
@@ -45,11 +46,13 @@ const NavButton = forwardRef<Ref, NavButtonProps>(({ position, label, noMargin, 
 	}
 
 	return (
-		<div ref={buttonRef} className={`nav-btn${isDisabled ? ' is-disabled' : ''}${inverse ? ' h-inverted' : ''} ${spanMargin}`} onClick={handleClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ flexDirection: position === 'left' ? 'row' : 'row-reverse' }}>
-			<span className='nav-btn-icon'>
-				<span className='nav-btn-svg'>{position === 'left' ? <MdArrowLeft /> : <MdArrowRight />}</span>
+		<div ref={buttonRef} className={`sai-nav-btn${isDisabled ? ' is-disabled' : ''}${inverse ? ' h-inverted' : ''} ${spanMargin}`} onClick={handleClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ flexDirection: position === 'left' ? 'row' : 'row-reverse' }}>
+			<span className='sai-nav-btn__icon'>
+				<span className='sai-nav-btn__svg'>
+					<img className={`${position === 'left' ? 'h-flipped' : ''}`} src='/icons/arrow.svg' />
+				</span>
 			</span>
-			<span className={`nav-btn-label ${spanPadding}`}>{label}</span>
+			<span className={`sai-nav-btn__label ${spanPadding}`}>{label}</span>
 		</div>
 	);
 });

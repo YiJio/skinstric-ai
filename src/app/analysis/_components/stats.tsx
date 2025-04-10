@@ -1,16 +1,16 @@
 'use client';
 
 // packages
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 // utils
 import { UtilHelpers } from '@/utils/util-helpers';
 // types
 import { DemographicsSection } from '../demographics/utils';
 // components
 import CircularProgressBar from '@/components/circular-progress-bar';
-import AnalysisStatsValue from './analysis-stats-value';
+import StatsValue from './stats-value';
 
-interface AnalysisStatsProps {
+interface StatsProps {
 	stats: DemographicsSection;
 	category: string;
 	activeItem: number;
@@ -19,7 +19,7 @@ interface AnalysisStatsProps {
 
 type Ref = HTMLInputElement;
 
-const AnalysisStats = forwardRef<Ref, AnalysisStatsProps>(({ category, stats, activeItem, setActiveItem }, ref) => {
+const Stats = forwardRef<Ref, StatsProps>(({ category, stats, activeItem, setActiveItem }, ref) => {
 	// states
 	
 	if(!stats) { return <>Loading...</>; }
@@ -35,10 +35,10 @@ const AnalysisStats = forwardRef<Ref, AnalysisStatsProps>(({ category, stats, ac
 					<span>{category}</span>
 					<span>A. I. confidence</span>
 				</div>
-				{stats?.items?.map((stat, index) => (<AnalysisStatsValue key={index} label={stat.label} score={stat.value} isActive={activeItem === index} setActiveItem={() => setActiveItem(index)} />))}
+				{stats?.items?.map((stat, index) => (<StatsValue key={index} label={stat.label} score={stat.value} isActive={activeItem === index} setActiveItem={() => setActiveItem(index)} />))}
 			</div>
 		</div>
 	);
 });
 
-export default AnalysisStats;
+export default Stats;

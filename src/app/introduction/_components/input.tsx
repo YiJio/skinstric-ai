@@ -2,8 +2,10 @@
 
 // packages
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+// css
+import './styles.css';
 
-interface IntroInputProps {
+interface InputProps {
 	label: string;
 	field?: string;
 	hint?: string;
@@ -16,7 +18,7 @@ type Ref = HTMLInputElement;
 
 const WIDTH = 420;
 
-const IntroInput = forwardRef<Ref, IntroInputProps>(({ label, field, hint, placeholder, onChange, onSubmit }, ref) => {
+const Input = forwardRef<Ref, InputProps>(({ label, field, hint, placeholder, onChange, onSubmit }, ref) => {
 	// states
 	const [isTyping, setIsTyping] = useState(false);
 	// refs
@@ -75,11 +77,11 @@ const IntroInput = forwardRef<Ref, IntroInputProps>(({ label, field, hint, place
 				}
 			</span>
 			<form className='sai-layer__element' onSubmit={handleSubmit}>
-				<input ref={inputRef} type='text' id={label} name={label} className={`sai-input tracking-tighter w-full${(field === '' && !isTyping) ? ' is-hidden ' : ''}`} value={field} placeholder={placeholder} onChange={handleChange} onFocus={() => setIsTyping(true)} onBlur={() => setIsTyping(false)} />
-				<label htmlFor={label} className={`${field !== '' ? 'is-hidden ' : ''}absolute -top-1 left-0 w-full h-full cursor-text text-center tracking-tighter`}>{hint}</label>
+				<input ref={inputRef} type='text' id={label} name={label} className={`sai-input${(field === '' && !isTyping) ? ' is-hidden ' : ''}`} value={field} placeholder={placeholder} onChange={handleChange} onFocus={() => setIsTyping(true)} onBlur={() => setIsTyping(false)} />
+				<label htmlFor={label} className={`sai-label${field !== '' ? ' is-hidden ' : ''}`}>{hint}</label>
 			</form>
 		</div>
 	);
 });
 
-export default IntroInput;
+export default Input;

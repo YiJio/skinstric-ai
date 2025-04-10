@@ -5,7 +5,7 @@ import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react
 // hooks
 // components
 
-interface AnalysisTabsProps {
+interface TabsProps {
 	values?: string[];
 	tabs?: string[];
 	category: number;
@@ -14,7 +14,7 @@ interface AnalysisTabsProps {
 
 type Ref = HTMLInputElement;
 
-const AnalysisTabs = forwardRef<Ref, AnalysisTabsProps>(({ values, tabs, category, onChangeTab }, ref) => {
+const Tabs = forwardRef<Ref, TabsProps>(({ values, tabs, category, onChangeTab }, ref) => {
 	// refs
 
 	const handleChangeTab = (index: number) => {
@@ -31,4 +31,4 @@ const AnalysisTabs = forwardRef<Ref, AnalysisTabsProps>(({ values, tabs, categor
 	);
 });
 
-export default AnalysisTabs;
+export default Tabs;

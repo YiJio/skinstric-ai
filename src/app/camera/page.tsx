@@ -11,10 +11,11 @@ import { useGalleryStore } from '@/stores/gallery-store';
 // components
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import Loading from '@/components/loading';
 import ListItem from '@/components/list-item';
+import Loading from '@/components/loading';
 import NavButton from '@/components/nav-button';
 
+// important variables
 const API_URL = 'https://us-central1-frontend-simplified.cloudfunctions.net';
 
 export default function Page() {
@@ -54,7 +55,7 @@ export default function Page() {
 					body: JSON.stringify({ image }),
 				});
 				const data = await response.json();
-				console.log(data.data);
+				//console.log(data.data);
 				demoStore?.setDemographics(data.data);
 			}, 1000);
 			setTimeout(() => {
@@ -84,7 +85,7 @@ export default function Page() {
 				<img src='/icons/camera-icon.svg' />
 				<span>Setting up camera...</span>
 			</>} />) : (<>
-				<Header title='' />
+				<Header inverted title='' />
 				<video ref={videoRef} width='100%' height='100%' autoPlay />
 				{isPhotoTaken ? (<div className='absolute top-32 w-full h-4 flex justify-center text-white uppercase'>Great shot!</div>) : (<div className='absolute top-1/2 right-8 transform translate-y-0.5 flex items-center gap-4 text-white uppercase text-sm cursor-pointer' onClick={handleTakePhoto}>
 					<span>Take picture</span>

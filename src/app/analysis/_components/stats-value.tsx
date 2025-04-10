@@ -1,11 +1,16 @@
-interface AnalysisStatsValueProps {
+'use client';
+
+// css
+import './styles.css';
+
+interface StatsValueProps {
 	label: string;
 	score: number;
 	isActive?: boolean;
 	setActiveItem: () => void;
 }
 
-const AnalysisStatsValue: React.FC<AnalysisStatsValueProps> = ({ isActive = false, label, score, setActiveItem }) => {
+const StatsValue: React.FC<StatsValueProps> = ({ isActive = false, label, score, setActiveItem }) => {
 
 	return (
 		<div className={`sai-stats__value${isActive ? ' isActive' : ''}`} onClick={setActiveItem}>
@@ -18,4 +23,4 @@ const AnalysisStatsValue: React.FC<AnalysisStatsValueProps> = ({ isActive = fals
 	);
 };
 
-export default AnalysisStatsValue;
+export default StatsValue;

@@ -30,7 +30,7 @@ const ImagePreview = forwardRef<Ref, ImagePreviewProps>(({ index, imageSrc, file
 				<img className={`sai-preview__img${!isValid ? ' sai-preview__img--empty' : ''}`} src={isValid ? imageSrc : '/icons/empty-image.png'} onClick={handleClick} />
 			</div>
 			<span>{fileName && (<span>{fileName}</span>)}</span>
-			<span>{isValid ? (<span onClick={handleRemove}>x</span>) : ' '}</span>
+			<span className='sai-preview__remove'>{isValid ? (<img onClick={handleRemove} src='/icons/plus.svg'/>) : ' '}</span>
 		</div>
 	);
 });

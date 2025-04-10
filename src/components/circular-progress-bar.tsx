@@ -1,6 +1,9 @@
 'use client';
 
+// packages
 import React, { useRef, useEffect, useState } from 'react';
+// css
+import './styles.css';
 
 interface CircularProgressBarProps {
 	percentage: number;
@@ -8,7 +11,7 @@ interface CircularProgressBarProps {
 
 const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ percentage }) => {
 	// states
-	const [isAnimating, setIsAnimating] = useState(false);
+	//const [isAnimating, setIsAnimating] = useState(false);
 	// refs
 	const circleRef = useRef<SVGCircleElement>(null);
 

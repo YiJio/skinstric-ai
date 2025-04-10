@@ -3,13 +3,11 @@ import React from 'react';
 // components
 import ListItem from '@/components/list-item';
 
-const UploadRulesDialogHeader = ({ }) => {
-	return (
-		<div>Please ensure your selfie has:</div>
-	);
+const UploadRulesDialogHeader = () => {
+	return (<>Please ensure your selfie has:</>);
 }
 
-const UploadRulesDialogContent = ({ }) => {
+const UploadRulesDialogContent = () => {
 	return (
 		<ul>
 			<ListItem description='Neutral expression' more='smiling may distort wrinkles' />

@@ -1,12 +1,12 @@
 'use client';
 
 // packages
-import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, ReactNode, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-// hooks
-// components
+// css
+import './styles.css';
 
-interface AnalysisMenuProps {
+interface MenuProps {
 	width?: number;
 	content?: ReactNode;
 	onChange?: (isNew: boolean, file: any) => void;
@@ -14,7 +14,7 @@ interface AnalysisMenuProps {
 
 type Ref = HTMLInputElement;
 
-const AnalysisMenu = forwardRef<Ref, AnalysisMenuProps>(({ }, ref) => {
+const Menu = forwardRef<Ref, MenuProps>(({ }, ref) => {
 	// hooks	
 	const router = useRouter();
 	// refs
@@ -48,4 +48,4 @@ const AnalysisMenu = forwardRef<Ref, AnalysisMenuProps>(({ }, ref) => {
 	);
 });
 
-export default AnalysisMenu;
+export default Menu;
