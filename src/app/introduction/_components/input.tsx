@@ -2,8 +2,6 @@
 
 // packages
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-// css
-import './styles.css';
 
 interface InputProps {
 	label: string;

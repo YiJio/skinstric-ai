@@ -3,6 +3,8 @@
 // packages
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+// css
+import './styles.css';
 // hooks
 import usePersistStore from '@/hooks/use-persist-store';
 // stores
@@ -22,6 +24,7 @@ export default function Page() {
 	// states
 	const [image, setImage] = useState<string>('');
 	const [isLoading, setIsLoading] = useState(true);
+	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
 	const [isPhotoTaken, setIsPhotoTaken] = useState(false);
 	// refs
 	const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,7 +33,7 @@ export default function Page() {
 	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
 	const demoStore = usePersistStore(useDemographicsStore, (state) => state);
 
-	const handleTakePhoto = async () => {
+	const handleTakePhoto = async (isRetake = false) => {
 		if (videoRef.current) {
 			const canvas = document.createElement('canvas');
 			canvas.width = videoRef.current.videoWidth;
@@ -41,14 +44,19 @@ export default function Page() {
 				const dataURL = canvas.toDataURL('image/jpeg');
 				setIsPhotoTaken(true);
 				setImage(dataURL);
-				galleryStore?.addImage(dataURL);
+				if (isRetake) { galleryStore?.replaceImage(dataURL); }
+				else { galleryStore?.addImage(dataURL); }
 			}
 		}
 	}
 
 	const handleSubmitImage = async () => {
 		try {
+			setTimeout(() => {
+				setLoadingStates((prev) => ({ ...prev, uploading: true, processing: false }));
+			}, 2000);
 			setTimeout(async () => {
+				setLoadingStates((prev) => ({ ...prev, uploading: false, processing: true }));
 				const response = await fetch(`${API_URL}/skinstricPhaseTwo`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json', },
@@ -59,6 +67,7 @@ export default function Page() {
 				demoStore?.setDemographics(data.data);
 			}, 1000);
 			setTimeout(() => {
+				setLoadingStates((prev) => ({ ...prev, processing: false }));
 				router.push('/analysis/demographics');
 			}, 2000);
 		} catch (e) {
@@ -79,28 +88,38 @@ export default function Page() {
 		return () => clearTimeout(timer);
 	}, []);
 
+	const isNotLoadingOther = !loadingStates.processing && !loadingStates.uploading;
+
 	return (
 		<>
 			{isLoading ? (<Loading content={<>
 				<img src='/icons/camera-icon.svg' />
 				<span>Setting up camera...</span>
 			</>} />) : (<>
-				<Header inverted title='' />
-				<video ref={videoRef} width='100%' height='100%' autoPlay />
-				{isPhotoTaken ? (<div className='absolute top-32 w-full h-4 flex justify-center text-white uppercase'>Great shot!</div>) : (<div className='absolute top-1/2 right-8 transform translate-y-0.5 flex items-center gap-4 text-white uppercase text-sm cursor-pointer' onClick={handleTakePhoto}>
-					<span>Take picture</span>
-					<img src='/icons/take-picture-icon.svg' />
-				</div>)}
+				{isNotLoadingOther ? (<>
+					<Header inverted title='' />
+					<video ref={videoRef} className='sai-camera' width='100%' height='100%' autoPlay />
+					{isPhotoTaken ? (<>
+						<div className='sai-marquee'>Great shot!</div>
+						<div className='sai-snap' onClick={() => handleTakePhoto(true)}>
+							<span>Retake</span>
+							<img src='/icons/take-picture-icon.svg' />
+						</div>
+					</>) : (<div className='sai-snap' onClick={() => handleTakePhoto(false)}>
+						<span>Take picture</span>
+						<img src='/icons/take-picture-icon.svg' />
+					</div>)}
+				</>) : (<Loading content={loadingStates.uploading ? 'Sending your image to our servers...' : 'Preparing your analysis'} />)}
 			</>)}
-			<div className={`w-full ${isLoading ? 'bottom-48 text-black' : 'bottom-8 text-white'} absolute flex flex-col items-center justify-center gap-3 uppercase text-sm`}>
-				<p className='text-center'>To get better results make sure to have</p>
-				<ul className='flex gap-5'>
-					<ListItem inverse description='Neutral expression' />
-					<ListItem inverse description='Frontal pose' />
-					<ListItem inverse description='Adequate lighting' />
+			{isNotLoadingOther && (<div className={`sai-rules${isLoading ? ' is-loading' : ''}`}>
+				<p style={{ textAlign:'center' }}>To get better results make sure to have</p>
+				<ul className='h-flex h-gap-5'>
+					<ListItem inverse={!isLoading} description='Neutral expression' />
+					<ListItem inverse={!isLoading} description='Frontal pose' />
+					<ListItem inverse={!isLoading} description='Adequate lighting' />
 				</ul>
-			</div>
-			{!isLoading && (<Footer left={<NavButton inverse position='left' label='Back' onClick={() => router.push('/introduction?s2=y')} noMargin />} right={isPhotoTaken && (<NavButton inverse position='right' label='Proceed' onClick={handleSubmitImage} noMargin />)} />)}
+			</div>)}
+			{!isLoading && isNotLoadingOther && (<Footer left={<NavButton inverse position='left' label='Back' onClick={() => router.push('/introduction?s2=y')} noMargin />} right={isPhotoTaken && (<NavButton inverse position='right' label='Proceed' onClick={handleSubmitImage} noMargin />)} />)}
 		</>
 	);
 }

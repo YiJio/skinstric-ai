@@ -1,7 +1,5 @@
 // packages
 import React, { forwardRef } from 'react';
-// css
-import './styles.css';
 
 interface HeadingProps {
 	text: string;

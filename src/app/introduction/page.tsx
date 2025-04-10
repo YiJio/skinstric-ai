@@ -3,6 +3,8 @@
 // packages
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+// css
+import './styles.css';
 // hooks
 import usePersistStore from '@/hooks/use-persist-store';
 // stores
@@ -15,6 +17,7 @@ import Header from '@/components/header';
 import Loading from '@/components/loading';
 import NavButton from '@/components/nav-button';
 import { Input, InputLocation, InputCamera, InputUpload } from './_components';
+import Footer from '@/components/footer';
 
 const MAX_STEPS = 3;
 //const API_URL = 'https://us-central1-api-skinstric-ai.cloudfunctions.net';
@@ -25,7 +28,8 @@ export default function Page() {
 	const [step, setStep] = useState(0);
 	const [formFields, setFormFields] = useState({ name: '', location: '' }); // temp
 	const [image, setImage] = useState(''); // temp
-	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
+	const [isLoading, setIsLoading] = useState(false);
+	const [loadingStates, setLoadingStates] = useState({ submitting: false, uploading: false, processing: false });
 	// hooks
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -57,13 +61,14 @@ export default function Page() {
 
 	const handleFormChange = (field: string, value: string) => {
 		setFormFields((prev) => ({ ...prev, [field]: value }));
-		if(field === 'name') { formStore?.setName(value); }
+		if (field === 'name') { formStore?.setName(value); }
 		else { formStore?.setLocation(value); }
 	}
 
 	const handleSubmitForm = async () => {
 		if (isValidFields(true)) {
 			try {
+				setLoadingStates((prev) => ({ ...prev, submitting: true }));
 				const response = await fetch(`${API_URL}/skinstricPhaseOne`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json', },
@@ -74,7 +79,10 @@ export default function Page() {
 					// use a toast
 					console.log(data);
 					console.log(`Added ${formStore?.name} from ${formStore?.location}.`);
-					handleNextStep();
+					setTimeout(() => {
+						setLoadingStates((prev) => ({ ...prev, submitting: false }));
+						handleNextStep();
+					}, 1000);
 				}
 			} catch (e) {
 				console.error(e);
@@ -107,7 +115,7 @@ export default function Page() {
 	const handleSubmitImage = async (image: string) => {
 		try {
 			setTimeout(async () => {
-				setLoadingStates({ uploading: false, processing: true });
+				setLoadingStates((prev) => ({ ...prev, uploading: false, processing: true }));
 				const response = await fetch(`${API_URL}/skinstricPhaseTwo`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json', },
@@ -131,7 +139,14 @@ export default function Page() {
 	}, [initStep]);
 
 	useEffect(() => {
-		if(formStore) {
+		setIsLoading(true);
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 100);
+	}, [step]);
+
+	useEffect(() => {
+		if (formStore) {
 			setFormFields({ name: formStore.name, location: formStore.location });
 		}
 	}, [formStore]);
@@ -139,21 +154,23 @@ export default function Page() {
 	return (
 		<>
 			<Header />
-			{(!loadingStates.processing && !loadingStates.uploading) ? (<main>
+			{(!loadingStates.submitting && !loadingStates.processing && !loadingStates.uploading) ? (<main>
 				<div className='sai-heading'>
 					<strong>To start analysis</strong>
 				</div>
 				{step < 2 && (<>
-					<div className='sai-layer flex-col'>
-						<DottedBox />
-					</div>
-					<div className='sai-layer'>
-						{step === 0 && (<Input label='name' field={formFields?.name} hint='Introduce yourself' onChange={(value) => handleFormChange('name', value)} onSubmit={handleNextStep} />)}
-						{step === 1 && (<InputLocation label='location' field={formFields?.location} hint='Where are you from?' placeholder='Enter a location' onChange={(value) => handleFormChange('location', value)} onSubmit={handleSubmitForm} />)}
-					</div>
+					{isLoading ? (<Loading content={<></>} />) : (<>
+						<div className='sai-layer flex-col'>
+							<DottedBox />
+						</div>
+						<div className='sai-layer'>
+							{step === 0 && (<Input label='name' field={formFields?.name} hint='Introduce yourself' onChange={(value) => handleFormChange('name', value)} onSubmit={handleNextStep} />)}
+							{step === 1 && (<InputLocation label='location' field={formFields?.location} hint='Where are you from?' placeholder='Enter a location' onChange={(value) => handleFormChange('location', value)} onSubmit={handleSubmitForm} />)}
+						</div>
+					</>)}
 				</>)}
 				{step === 2 && (<>
-					<div className='sai-layer flex-row'>
+					<div className='sai-layer h-fr'>
 						<DottedBox width={320} />
 						<DottedBox width={320} />
 					</div>
@@ -162,13 +179,10 @@ export default function Page() {
 						<InputUpload content={<>Allow A.I.<br />to access gallery</>} onChange={(isNew, image) => handleImageChange(isNew, image)} />
 					</div>
 				</>)}
-				{step !== 0 && (<div className='sai-stepnav bottom-8 left-8'>
-					<NavButton position='left' label='Back' onClick={handlePrevStep} noMargin />
-				</div>)}
-				{step < MAX_STEPS && (<div className='sai-stepnav bottom-8 right-8'>
-					{(step !== 2 && isValidFields(false)) && (<NavButton position='right' label='Proceed' onClick={step === 1 ? handleSubmitForm : handleNextStep} noMargin />)}
-				</div>)}
-			</main>) : (<Loading content={loadingStates.uploading ? 'Sending your image to our servers...' : 'Preparing your analysis'} />)}
+				<Footer left={step !== 0 ? (<NavButton position='left' label='Back' onClick={handlePrevStep} noMargin />) : (<span></span>)} right={step < MAX_STEPS && (<>
+					{step !== 2 && (<NavButton position='right' label='Proceed' onClick={step === 1 ? handleSubmitForm : handleNextStep} noMargin />)}
+				</>)} />
+			</main>) : (<Loading content={loadingStates.submitting ? 'Please wait a moment...' : loadingStates.uploading ? 'Sending your image to our servers...' : 'Preparing your analysis'} />)}
 		</>
 	);
 }

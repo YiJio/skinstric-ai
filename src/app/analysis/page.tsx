@@ -1,8 +1,9 @@
 'use client';
 
 // packages
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+// css
+import './styles.css';
 // components
 import DottedBox from '@/components/dotted-box';
 import Header from '@/components/header';
@@ -12,14 +13,6 @@ import { Menu } from './_components';
 export default function Page() {
 	// hooks
 	const router = useRouter();
-
-	const handlePrevStep = () => {
-		router.push('/introduction?s2=y');
-	}
-
-	const handleNextStep = () => {
-		router.push('/analysis/demographics');
-	}
 
 	return (
 		<>
@@ -39,10 +32,10 @@ export default function Page() {
 					<Menu />
 				</div>
 				<div className='sai-stepnav bottom-8 left-8'>
-					<NavButton position='left' label='Back' onClick={handlePrevStep} noMargin />
+					<NavButton position='left' label='Back' onClick={() => router.push('/introduction?s2=y')} noMargin />
 				</div>
 				<div className='sai-stepnav bottom-8 right-8'>
-					<NavButton position='right' label='Get summary' onClick={handleNextStep} noMargin />
+					<NavButton position='right' label='Get summary' onClick={() => router.push('/analysis/demographics')} noMargin />
 				</div>
 			</main>
 		</>

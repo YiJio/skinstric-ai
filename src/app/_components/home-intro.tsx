@@ -2,8 +2,6 @@
 
 // packages
 import React, { useState, useRef, useEffect } from 'react';
-// css
-import './styles.css';
 // components
 import Heading from './heading';
 import Nav from './nav';

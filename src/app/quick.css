@@ -25,3 +25,38 @@
 /* ------------------------------------ */
 .h-inverted { filter:invert(1); }
 .h-flipped { transform:scale(-1); }
+
+/* ------------------------------------ */
+/*   MARGIN                             */
+/* ------------------------------------ */
+
+/* TOP/BOTTOM ------------------------- */
+.h-mt-4 { margin-top:16px; }
+.h-mt-4n { margin-top:-16px; }
+
+/* LEFT/RIGHT ------------------------- */
+.h-ml-4 { margin-left:16px; }
+.h-ml-10 { margin-left:40px; }
+.h-mr-10 { margin-right:40px; }
+
+/* ------------------------------------ */
+/*   PADDING                            */
+/* ------------------------------------ */
+
+/* TOP/BOTTOM ------------------------- */
+
+/* LEFT/RIGHT ------------------------- */
+.h-pl-1 { padding-left:4px; }
+.h-pr-1 { padding-right:4px; }
+.h-pl-4 { padding-left:16px; }
+.h-pr-4 { padding-right:16px; }
+.h-pl-10 { margin-left:40px; }
+.h-pr-10 { margin-right:40px; }
+
+/* ------------------------------------ */
+/*   GAPS                               */
+/* ------------------------------------ */
+.h-gap-4 { gap:16px; }
+.h-gap-5 { gap:20px; }
+.h-gap-6 { gap:24px; }
+.h-gap-10 { gap:40px; }

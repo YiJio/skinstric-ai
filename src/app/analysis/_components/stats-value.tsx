@@ -1,8 +1,5 @@
 'use client';
 
-// css
-import './styles.css';
-
 interface StatsValueProps {
 	label: string;
 	score: number;

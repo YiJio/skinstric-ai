@@ -1,0 +1,27 @@
+/* ==================================== */
+/*   C A M E R A   S T Y L E S          */
+/* ==================================== */
+
+/* SHARED ----------------------------- */
+.sai-marquee, .sai-rules, .sai-snap { position:absolute; display:flex; color:var(--color-white); text-transform:uppercase; font-size:14px; }
+
+/* ------------------------------------ */
+/*   CAMERA                             */
+/* ------------------------------------ */
+.sai-camera { width:100vw; height:100vh; object-fit:cover; }
+
+/* ------------------------------------ */
+/*   MARQUEE                            */
+/* ------------------------------------ */
+.sai-marquee { top:8rem; width:100%; height:16px; justify-content:center; }
+
+/* ------------------------------------ */
+/*   RULES                              */
+/* ------------------------------------ */
+.sai-rules { bottom:2rem; width:100%; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; }
+.sai-rules.is-loading { bottom:12rem; color:var(--color-primary); }
+
+/* ------------------------------------ */
+/*   SNAP                               */
+/* ------------------------------------ */
+.sai-snap { top:50%; right:2rem; transform:translateY(-50%); align-items:center; gap:1rem; cursor:pointer; }

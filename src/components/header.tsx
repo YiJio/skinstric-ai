@@ -22,7 +22,7 @@ const Header = forwardRef<Ref, HeaderProps>(({ title = 'Intro', inverted = false
 				</div>
 			</div>
 			<div className='h-flex h-ac'>
-				<button className='sai-button sai-button--black'>Enter Code</button>
+				<button className='sai-button sai-button--primary sai-button--black'>Enter Code</button>
 			</div>
 		</header>
 	);

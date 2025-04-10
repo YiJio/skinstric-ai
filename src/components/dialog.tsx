@@ -2,8 +2,6 @@
 
 // packages
 import React, { forwardRef, ReactNode, useEffect, useRef } from 'react';
-// css
-import './styles.css';
 
 export interface DialogProps {
 	header: ReactNode;

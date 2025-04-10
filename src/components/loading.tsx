@@ -63,12 +63,12 @@ const Loading = forwardRef<Ref, LoadingProps>(({ width = 400, content, other, is
 
 	return (
 		<div className='sai-loading'>
-			<div className='sai-layer flex-col'>
+			<div className='sai-layer h-fc'>
 				<DottedBox speedMultiplier={48} width={width} initRotations={[45, 60, 75]} />
 			</div>
 			<div className='sai-layer'>
 				<div ref={layerRef} className='sai-layer__content'>
-					<div ref={elementRef} className='sai-layer__element flex flex-col gap-4 items-center'>
+					<div ref={elementRef} className='sai-layer__element h-flex h-fc h-ac h-gap-4'>
 						{content}
 						{/*<div ref={contentRef} style={{ opacity:'0' }}>{content}</div>*/}
 					</div>

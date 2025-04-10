@@ -2,16 +2,16 @@
 import React, { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
-interface IntroductionLayoutProps {
+interface SkinLayoutProps {
 	children: ReactNode;
 }
 
 export const metadata: Metadata = {
-  title: 'Skinstric | Introduction',
+  title: 'Skinstric | Skin type',
   description: 'Skinstric uses A.I. algorithms to find the best ingredients for your skin profile and formulates a routine just for you.',
 };
 
-const IntroductionLayout = ({ children }: IntroductionLayoutProps) => {
+const SkinLayout = ({ children }: SkinLayoutProps) => {
 	
 	return (
 		<>
@@ -20,4 +20,4 @@ const IntroductionLayout = ({ children }: IntroductionLayoutProps) => {
 	);
 }
 
-export default IntroductionLayout;
+export default SkinLayout;

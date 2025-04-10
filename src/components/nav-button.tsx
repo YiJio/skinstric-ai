@@ -2,8 +2,6 @@
 
 // packages
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-// css
-import './styles.css';
 
 interface NavButtonProps {
 	position: string;
@@ -24,21 +22,21 @@ const NavButton = forwardRef<Ref, NavButtonProps>(({ position, label, noMargin, 
 
 	const spanMargin = !noMargin ?
 		position === 'left'
-			? 'ml-10'
+			? ' h-ml-10'
 			: position === 'right'
-				? 'mr-10'
+				? ' h-mr-10'
 				: ''
 		: '';
 	const spanPadding = isHovered ?
 		position === 'left'
-			? 'pl-10'
+			? ' h-pl-10'
 			: position === 'right'
-				? 'pr-10'
+				? ' h-pr-10'
 				: ''
 		: position === 'left'
-			? 'pl-4'
+			? ' h-pl-4'
 			: position === 'right'
-				? 'pr-4'
+				? ' h-pr-4'
 				: '';
 
 	const handleClick = () => {
@@ -46,9 +44,9 @@ const NavButton = forwardRef<Ref, NavButtonProps>(({ position, label, noMargin, 
 	}
 
 	return (
-		<div ref={buttonRef} className={`sai-nav-btn${isDisabled ? ' is-disabled' : ''}${inverse ? ' h-inverted' : ''} ${spanMargin}`} onClick={handleClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ flexDirection: position === 'left' ? 'row' : 'row-reverse' }}>
+		<div ref={buttonRef} className={`sai-nav-btn${isDisabled ? ' is-disabled' : ''}${inverse ? ' h-inverted' : ''}${spanMargin}`} onClick={handleClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ flexDirection: position === 'left' ? 'row' : 'row-reverse' }}>
 			<span className='sai-nav-btn__icon'>
-				<span className='sai-nav-btn__svg'>
+				<span className={`sai-nav-btn__svg h-p${position === 'left' ? 'r' : 'l'}-1`}>
 					<img className={`${position === 'left' ? 'h-flipped' : ''}`} src='/icons/arrow.svg' />
 				</span>
 			</span>

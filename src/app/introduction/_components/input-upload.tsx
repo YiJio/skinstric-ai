@@ -2,14 +2,12 @@
 
 // packages
 import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
-// css
-import './styles.css';
 // hooks
 import { useDialog } from '@/hooks/use-dialog';
 // components
 import Dialog from '@/components/dialog';
-import { UploadRulesDialogContent, UploadRulesDialogHeader } from './upload-rules-dialog';
 import { GalleryDialogContent, GalleryDialogHeader } from './gallery-dialog';
+import { UploadRulesDialogContent, UploadRulesDialogHeader } from './upload-rules-dialog';
 
 interface InputUploadProps {
 	width?: number;

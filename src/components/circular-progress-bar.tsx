@@ -2,8 +2,6 @@
 
 // packages
 import React, { useRef, useEffect, useState } from 'react';
-// css
-import './styles.css';
 
 interface CircularProgressBarProps {
 	percentage: number;

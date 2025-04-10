@@ -8,6 +8,7 @@ interface GalleryState {
 
 interface GalleryActions {
 	addImage: (image: string) => void;
+	replaceImage: (image: string) => void;
 	removeImageByIndex: (index: number) => void;
 	removeImage: (image: string) => void;
 }
@@ -17,6 +18,7 @@ export const useGalleryStore = create(
 		(set) => ({
 			gallery: [],
 			addImage: (image) => set((state) => ({ gallery: [ image, ...state.gallery] })),
+			replaceImage: (image) => set((state) => ({ gallery: state.gallery.map((img, i) => i === 0 ? image : img) })),
 			removeImage: (image) => set((state) => ({ gallery: state.gallery.filter((i) => i !== image) })),
 			removeImageByIndex: (index) => set((state) => ({ gallery: state.gallery.splice(index, 1) })),
 		}),

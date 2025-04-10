@@ -3,8 +3,6 @@
 // packages
 import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-// css
-import './styles.css';
 // components
 import Popup from '@/components/popup';
 
@@ -41,7 +39,7 @@ const InputCamera = forwardRef<Ref, InputCameraProps>(({ content, width = 320 },
 				</div>
 				<div className='sai-imgslot__img sai-imgslot__img--cam'>
 					<img src='/icons/camera-icon.svg' />
-					<Popup content={'Allow A.I. to access your camera'} cancelText='Deny' confirmText='Allow' onConfirm={handleAccessCamera} />
+					<Popup content={'Allow A.I. to access your camera.'} cancelText='Deny' confirmText='Allow' onConfirm={handleAccessCamera} />
 				</div>
 			</div>
 		</div>

@@ -30,35 +30,6 @@
 .sai-footer__wrapper { margin:0 32px 32px; display:flex; align-items:center; justify-content:space-between; text-transform:uppercase; letter-spacing:-0.025em; }
 
 /* ------------------------------------ */
-/*   BUTTON GROUP                       */
-/* ------------------------------------ */
-.sai-button-group { display:flex; gap:8px; }
-
-/* ------------------------------------ */
-/*   BUTTON                             */
-/* ------------------------------------ */
-
-/* CONTAINER -------------------------- */
-.sai-button { background:var(--color-primary); color:var(--color-white); }
-.sai-button:hover:not(.sai-button--black) { transform:translateY(1px); }
-.sai-button:active { transform:translateY(2px); }
-.sai-button--aside { opacity:0.7; }
-.sai-button--outline { margin:4px 0; padding:2px 8px; outline:1px solid var(--color-white); outline-offset:2px; }
-.sai-button--black { width:92px; padding:8px 16px; background:var(--color-primary); color:var(--color-white); font-size:10px; letter-spacing:-0.025em; font-weight:600; }
-.sai-button--black:hover { background:rgb(var(--color-gray-2)); }
-
-.sai-button--bg { position:relative; padding:8px 16px; height:36px; border:1px solid var(--color-primary); background:var(--color-white); color:var(--color-primary); font-weight:600; letter-spacing:-0.025em; line-height:1; }
-
-.sai-button--bg:before { position:absolute; content:''; width:100%; height:0; bottom:0; right:0; background:var(--color-primary); transition:all 0.3s ease; }
-.sai-button--bg:hover:before { height:100%; bottom:0; }
-.sai-button--primary { border-color:var(--color-white); background:var(--color-primary); color:var(--color-white); }
-.sai-button--primary:before { background:var(--color-white); }
-/* SPAN ------------------------------- */
-.sai-button span { position:relative; }
-.sai-button:hover span, .sai-button--primary span { color:var(--color-white); }
-.sai-button--primary:hover span { color:var(--color-primary); }
-
-/* ------------------------------------ */
 /*   CIRCULAR PROGRESS BAR              */
 /* ------------------------------------ */
 
@@ -95,6 +66,13 @@
 .sai-dialog__footer { justify-content:flex-end; gap:32px; border-top:1px solid var(--color-white); }
 
 /* ------------------------------------ */
+/*   DOTTED BOX                         */
+/* ------------------------------------ */
+.sai-dotted-box { position:absolute; inset:0; will-change:transform; }
+.sai-dotted-box--outer { opacity:0.5; }
+.sai-dotted-box--outermost { opacity:0.3; }
+
+/* ------------------------------------ */
 /*   NAV BUTTON                         */
 /* ------------------------------------ */
 
@@ -111,7 +89,7 @@
 .sai-nav-btn__icon:after { position:absolute; content:''; width:100%; height:100%; border:1px solid var(--color-primary); transition:transform 0.5s cubic-bezier(0.08,0.5,0.44,0.96); }
 .sai-nav-btn__icon:after { border-style:dotted; }
 /* LABEL ------------------------------ */
-.sai-nav-btn__label { text-transform:uppercase; font-size:11px; transition:all 0.3s ease-in-out; }
+.sai-nav-btn__label { text-transform:uppercase; font-size:14px; transition:all 0.3s ease-in-out; }
 /* SVG -------------------------------- */
 .sai-nav-btn__svg { transform:rotate(-45deg); font-size:20px; }
 
@@ -123,7 +101,7 @@
 .sai-popup__wrapper, .sai-popup__footer { display:flex; }
 .sai-popup__content, .sai-popup__footer { padding:8px 16px; }
 /* CONTAINER -------------------------- */
-.sai-popup { opacity:0; position:absolute; top:50%; left:100%; width:340px; height:140px; }
+.sai-popup { opacity:0; position:absolute; top:50%; left:100%; width:340px; height:140px; z-index:10; }
 /* WRAPPER ---------------------------- */
 .sai-popup__wrapper { flex-direction:column; height:100%; background:var(--color-primary); color:var(--color-white); }
 /* CONTENT ---------------------------- */
