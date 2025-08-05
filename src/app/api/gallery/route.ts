@@ -29,6 +29,7 @@ export async function PUT(req: NextRequest) {
       where: { id: userId },
       data: { gallery },
     });
+    console.log('updating gallery for user', userId);
     return NextResponse.json({ success: true, gallery: updatedUser.gallery });
   } catch (error) {
     console.error('PUT /api/gallery error:', error);

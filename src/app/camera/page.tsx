@@ -90,7 +90,7 @@ export default function Page() {
 	// update gallery in user whenever gallery store changes
   useEffect(() => {
     const updateGallery = async() => {
-			//console.log('updating gallery from /camera')
+			console.log('updating gallery from /camera')
       await fetch('/api/gallery', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
