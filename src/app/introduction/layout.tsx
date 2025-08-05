@@ -1,6 +1,7 @@
 // packages
 import React, { ReactNode } from 'react';
 import type { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
 
 interface IntroductionLayoutProps {
 	children: ReactNode;
@@ -15,6 +16,7 @@ const IntroductionLayout = ({ children }: IntroductionLayoutProps) => {
 	
 	return (
 		<>
+			<Toaster position='bottom-right' />
 			{children}
 		</>
 	);

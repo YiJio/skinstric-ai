@@ -6,16 +6,12 @@ import { useRouter } from 'next/navigation';
 // css
 import './styles.css';
 // hooks
-import usePersistStore from '@/hooks/use-persist-store';
+//import usePersistStore from '@/hooks/use-persist-store';
 // stores
-import { useDemographicsStore } from '@/stores/demo-store';
-import { useGalleryStore } from '@/stores/gallery-store';
+import { useDemographicsStore } from '@/stores/demo.store';
+import { useGalleryStore } from '@/stores/gallery.store';
 // components
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import ListItem from '@/components/list-item';
-import Loading from '@/components/loading';
-import NavButton from '@/components/nav-button';
+import { Header, Footer, ListItem, Loading, NavButton } from '@/components';
 
 // important variables
 const API_URL = 'https://us-central1-frontend-simplified.cloudfunctions.net';
@@ -30,8 +26,10 @@ export default function Page() {
 	const videoRef = useRef<HTMLVideoElement>(null);
 	// hooks
 	const router = useRouter();
-	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
-	const demoStore = usePersistStore(useDemographicsStore, (state) => state);
+	const galleryStore = useGalleryStore((state) => state);
+	const demoStore = useDemographicsStore((state) => state);
+	//const galleryStore = usePersistStore(useGalleryStore, (state) => state);
+	//const demoStore = usePersistStore(useDemographicsStore, (state) => state);
 
 	const handleTakePhoto = async (isRetake = false) => {
 		if (videoRef.current) {
@@ -88,6 +86,19 @@ export default function Page() {
 		}, 3000);
 		return () => clearTimeout(timer);
 	}, []);
+
+	// update gallery in user whenever gallery store changes
+  useEffect(() => {
+    const updateGallery = async() => {
+			//console.log('updating gallery from /camera')
+      await fetch('/api/gallery', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gallery: galleryStore.gallery })
+      });
+    }
+		if(galleryStore?.gallery) updateGallery();
+  }, [galleryStore?.gallery]);
 
 	const isNotLoadingOther = !loadingStates.processing && !loadingStates.uploading;
 

@@ -25,7 +25,7 @@ const Popup = forwardRef<Ref, PopupProps>(({ content, confirmText = 'Confirm', c
 	const openPopupAnimation = async () => {
 		const { gsap } = await import('gsap');
 		if (popupRef.current && !isOpen) {
-			console.log('here?')
+			//console.log('here?')
 			gsap.to(popupRef.current, {
 				opacity: 1,
 				duration: 0.3,
@@ -38,7 +38,7 @@ const Popup = forwardRef<Ref, PopupProps>(({ content, confirmText = 'Confirm', c
 	// closing animation
 	const closePopupAnimation = async () => {
 		const { gsap } = await import('gsap');
-		console.log('ty close')
+		//console.log('ty close')
 		if (popupRef.current) {
 			gsap.to(popupRef.current, {
 				opacity: 0,

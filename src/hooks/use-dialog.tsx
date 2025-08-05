@@ -14,9 +14,9 @@ export const useDialog = () => {
 
 	useEffect(() => {
 		if(!dialogRef.current) return;
-		console.log('dialog',dialogRef.current)
+		//console.log('dialog',dialogRef.current)
 		const portal = document.getElementById('root-portal');
-		console.log('porta;',portal)
+		//console.log('porta;',portal)
 		if(!portal) return;
 		portal.appendChild(dialogRef.current);
 		return () => {

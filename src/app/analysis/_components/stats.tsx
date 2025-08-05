@@ -7,7 +7,7 @@ import { UtilHelpers } from '@/utils/util-helpers';
 // types
 import { DemographicsSection } from '../demographics/utils';
 // components
-import CircularProgressBar from '@/components/circular-progress-bar';
+import { CircularProgressBar } from '@/components';
 import StatsValue from './stats-value';
 
 interface StatsProps {

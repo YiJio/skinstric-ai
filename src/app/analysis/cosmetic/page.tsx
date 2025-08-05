@@ -6,10 +6,7 @@ import { useRouter } from 'next/navigation';
 // css
 import '../styles.css';
 // components
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import Loading from '@/components/loading';
-import NavButton from '@/components/nav-button';
+import { Header, Footer, Loading, NavButton } from '@/components';
 import { PageButton } from '../_components';
 
 export default function Page() {

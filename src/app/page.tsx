@@ -3,15 +3,10 @@
 // packages
 import { useEffect } from 'react';
 // components
-import Header from '@/components/header';
-import Footer from '@/components/footer';
+import { Header, Footer } from '@/components';
 import { HomeIntro } from './_components';
 
 export default function Home() {
-
-  useEffect(() => {
-		document.body.classList.remove('sai-analysis-fixed');
-  }, []);
   
   return (
     <>

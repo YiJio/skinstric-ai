@@ -57,7 +57,7 @@ const Loading = forwardRef<Ref, LoadingProps>(({ width = 400, content, other, is
 	}, [content]);
 
 	useEffect(() => {
-		console.log('isclosing', isClosing)
+		//console.log('isclosing', isClosing)
 		if (isClosing) animateLayerOut();
 	}, [isClosing]);
 

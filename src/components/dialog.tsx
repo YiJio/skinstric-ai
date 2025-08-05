@@ -29,7 +29,7 @@ const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'C
 	const openDialogAnimation = async () => {
 		const { gsap } = await import('gsap');
 		if (dialogRef.current && borderRef.current && wrapperRef.current) {
-			console.log('opening')
+			//console.log('opening')
 			const tl = gsap.timeline();
 			tl.to(borderRef.current, {
 				opacity: 1,
@@ -52,7 +52,7 @@ const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'C
 	const closeDialogAnimation = async () => {
 		const { gsap } = await import('gsap');
 		if (dialogRef.current && borderRef.current && wrapperRef.current) {
-			console.log('closing')
+			//console.log('closing')
 			const tl = gsap.timeline();
 			tl.to(wrapperRef.current, {
 				height: 0,
@@ -70,7 +70,7 @@ const Dialog = forwardRef<Ref, DialogProps>(({ header, content, confirmText = 'C
 	}
 
 	const handleAction = (mode: number) => {
-		console.log('trying action')
+		//console.log('trying action')
 		closeDialogAnimation();
 		setTimeout(() => {
 			if (mode === 0) onCancel && onCancel();

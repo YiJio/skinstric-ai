@@ -1,6 +1,6 @@
 // packages
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+//import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AgeData {
 	'0-2': number;
@@ -44,7 +44,24 @@ interface DemographicsActions {
 	setDemographics: (demographics: Partial<DemographicsState['demographics']>) => void;
 }
 
-export const useDemographicsStore = create(
+// standard
+export const useDemographicsStore = create<DemographicsState & DemographicsActions>((set) => ({
+	demographics: {
+		age: { '0-2': 0, '3-9': 0, '10-19': 0, '20-29': 0, '30-39': 0, '40-49': 0, '50-59': 0, '60-69': 0, '70+': 0 },
+		gender: { male: 0, female: 0 },
+		race: { 'black': 0, 'east asian': 0, 'latino hispanic': 0, 'middle eastern': 0, 'south asian': 0, 'southeast asian': 0, 'white': 0 },
+	},
+	setDemographics: (demographics) => {
+		if(isValid(demographics)) {
+			set((state) => ({ demographics: { ...state.demographics, ...demographics } }));
+		} else {
+			console.error('Invalid demographics data.');
+		}
+	},
+}));
+
+// persist
+/*export const useDemographicsStore = create(
 	persist<DemographicsState & DemographicsActions>(
 		(set) => ({
 			//age: { '0-2': 0, '3-9': 0, '10-19': 0, '20-29': 0, '30-39': 0, '40-49': 0, '50-59': 0, '60-69': 0, '70+': 0 },
@@ -71,7 +88,7 @@ export const useDemographicsStore = create(
 			storage: createJSONStorage(() => localStorage),
 		}
 	),
-);
+);*/
 
 const isValid = (demographics: Partial<DemographicsState['demographics']>): boolean => {
 	return (

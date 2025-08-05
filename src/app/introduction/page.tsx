@@ -3,21 +3,17 @@
 // packages
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 // css
 import './styles.css';
 // hooks
-import usePersistStore from '@/hooks/use-persist-store';
+//import usePersistStore from '@/hooks/use-persist-store';
 // stores
-import { useDemographicsStore } from '@/stores/demo-store';
-import { useGalleryStore } from '@/stores/gallery-store';
-import { useFormStore } from '@/stores/form-store';
+import { useGalleryStore } from '@/stores/gallery.store';
+import { useFormStore } from '@/stores/form.store';
 // components
-import DottedBox from '@/components/dotted-box';
-import Header from '@/components/header';
-import Loading from '@/components/loading';
-import NavButton from '@/components/nav-button';
+import { DottedBox, Header, Loading, NavButton, Footer } from '@/components';
 import { Input, InputLocation, InputCamera, InputUpload } from './_components';
-import Footer from '@/components/footer';
 
 const MAX_STEPS = 3;
 //const API_URL = 'https://us-central1-api-skinstric-ai.cloudfunctions.net';
@@ -33,9 +29,11 @@ export default function Page() {
 	// hooks
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const formStore = usePersistStore(useFormStore, (state) => state);
+	const formStore = useFormStore((state) => state);
+	const galleryStore = useGalleryStore((state) => state);
+	/*const formStore = usePersistStore(useFormStore, (state) => state);
 	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
-	const demoStore = usePersistStore(useDemographicsStore, (state) => state);
+	const demoStore = usePersistStore(useDemographicsStore, (state) => state);*/
 	// variables
 	const initStep = searchParams.get('s2') === 'y' ? 2 : 0;
 
@@ -69,16 +67,22 @@ export default function Page() {
 		if (isValidFields(true)) {
 			try {
 				setLoadingStates((prev) => ({ ...prev, submitting: true }));
-				const response = await fetch(`${API_URL}/skinstricPhaseOne`, {
+				const cloudApiResponse = await fetch(`${API_URL}/skinstricPhaseOne`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json', },
 					body: JSON.stringify({ name: formStore?.name, location: formStore?.location }),
 				});
-				const data = await response.json();
-				if (data.success) {
+				const cloudApiData = await cloudApiResponse.json();
+				if (cloudApiData.success) {
+					// save to db as well
+					await fetch('/api/user', {
+						method: 'PUT',
+						headers: { 'Content-Type': 'application/json', },
+						body: JSON.stringify({ name: formStore.name, location: formStore.location })
+					});
 					// use a toast
-					console.log(data);
-					console.log(`Added ${formStore?.name} from ${formStore?.location}.`);
+					toast.success(`Added ${formStore?.name} from ${formStore?.location}.`);
+					//console.log(`Added ${formStore?.name} from ${formStore?.location}.`);
 					setTimeout(() => {
 						setLoadingStates((prev) => ({ ...prev, submitting: false }));
 						handleNextStep();
@@ -104,7 +108,7 @@ export default function Page() {
 				}
 				reader.readAsDataURL(file);
 			} catch (e) {
-				console.log(e);
+				console.error(e);
 			}
 		} else {
 			setImage(file);
@@ -122,8 +126,14 @@ export default function Page() {
 					body: JSON.stringify({ image }),
 				});
 				const data = await response.json();
-				console.log(data.data);
-				demoStore?.setDemographics(data.data);
+				// save this analysis to database
+				await fetch('/api/demo', {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json', },
+					body: JSON.stringify(data.data),
+				})
+				// do this in actual demographics page
+				//demoStore?.setDemographics(data.data);
 			}, 1000);
 			setTimeout(() => {
 				setLoadingStates((prev) => ({ ...prev, processing: false }));
@@ -133,10 +143,6 @@ export default function Page() {
 			console.error(e);
 		}
 	}
-
-	useEffect(() => {
-		document.body.classList.remove('sai-analysis-fixed');
-	}, []);
 
 	useEffect(() => {
 		if (initStep !== 0) setStep(initStep);
@@ -149,11 +155,41 @@ export default function Page() {
 		}, 100);
 	}, [step]);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		if (formStore) {
 			setFormFields({ name: formStore.name, location: formStore.location });
 		}
-	}, [formStore]);
+	}, [formStore]);*/
+
+  // get saved user details from browser session
+  useEffect(() => {
+		document.body.classList.remove('sai-analysis-fixed');
+    const loadUser = async() => {
+			if(!formStore || !galleryStore) return;
+      const res = await fetch('/api/user');
+      const data = await res.json();
+			if(data) {
+				formStore.setName(data.user.name);
+				formStore.setLocation(data.user.location);
+				galleryStore.setImages(data.user.gallery);
+				setFormFields({ name: data.user.name, location: data.user.location });
+			}
+    }
+    loadUser();
+  }, []);
+
+  // update gallery in user whenever gallery store changes
+  useEffect(() => {
+    const updateGallery = async() => {
+			//console.log('updating gallery from /introduction')
+      await fetch('/api/gallery', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gallery: galleryStore.gallery })
+      });
+    }
+		if(galleryStore?.gallery) updateGallery();
+  }, [galleryStore?.gallery]);
 
 	return (
 		<>

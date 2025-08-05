@@ -3,11 +3,11 @@
 // packages
 import React, { useEffect } from 'react';
 // hooks
-import usePersistStore from '@/hooks/use-persist-store';
+//import usePersistStore from '@/hooks/use-persist-store';
 // stores
-import { useGalleryStore } from '@/stores/gallery-store';
+import { useGalleryStore } from '@/stores/gallery.store';
 // components
-import ImagePreview from '@/components/image-preview';
+import { ImagePreview } from '@/components';
 
 const GalleryDialogHeader = () => {
 	return (<>Recently downloaded images</>);
@@ -19,7 +19,8 @@ interface GalleryDialogContentProps {
 
 const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ onSelect }) => {
 	// stores
-	const galleryStore = usePersistStore(useGalleryStore, (state) => state);
+	const galleryStore = useGalleryStore((state) => state);
+	//const galleryStore = usePersistStore(useGalleryStore, (state) => state);
 	// variables
 	const images = galleryStore?.gallery;	
 

@@ -20,7 +20,7 @@ const ImagePreview = forwardRef<Ref, ImagePreviewProps>(({ index, imageSrc, file
 	}
 
 	const handleRemove = () => {
-		console.log('removing...',index);
+		//console.log('removing...',index);
 		onRemove && onRemove();
 	}
 

@@ -1,6 +1,6 @@
 // packages
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+//import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface FormState {
 	name: string;
@@ -12,7 +12,16 @@ interface FormActions {
 	setLocation: (location: string) => void;
 }
 
-export const useFormStore = create(
+// standard
+export const useFormStore = create<FormState & FormActions>((set) => ({
+	name: '',
+	setName: (name) => set({ name }),
+	location: '',
+	setLocation: (location) => set({ location }),
+}));
+
+// persist
+/*export const useFormStore = create(
 	persist<FormState & FormActions>(
 		(set) => ({
 			name: '',
@@ -25,4 +34,4 @@ export const useFormStore = create(
 			storage: createJSONStorage(() => localStorage),
 		},
 	),
-);
+);*/

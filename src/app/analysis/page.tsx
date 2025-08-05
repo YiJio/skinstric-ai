@@ -6,10 +6,7 @@ import { useRouter } from 'next/navigation';
 // css
 import './styles.css';
 // components
-import DottedBox from '@/components/dotted-box';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import NavButton from '@/components/nav-button';
+import { DottedBox, Header, Footer, NavButton } from '@/components';
 import { Menu } from './_components';
 
 export default function Page() {

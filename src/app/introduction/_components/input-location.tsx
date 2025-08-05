@@ -94,7 +94,7 @@ const InputLocation = forwardRef<Ref, InputLocationProps>(({ label, field, hint,
 			autocomplete.addListener('place_changed', () => {
 				const place = autocomplete.getPlace();
 				onChange && onChange(place.name);
-				console.log('Selected place:', place);
+				//console.log('Selected place:', place);
 			});
 		}
 		return () => {

@@ -28,7 +28,7 @@ const InputUpload = forwardRef<Ref, InputUploadProps>(({ content, width = 320, o
 
 	const handleOpen = (mode: string) => {
 		if(mode === 'rules') {
-			console.log('trying to open upload rules');
+			//console.log('trying to open upload rules');
 			openDialog({
 				height: 332,
 				header: <UploadRulesDialogHeader />,
@@ -39,7 +39,7 @@ const InputUpload = forwardRef<Ref, InputUploadProps>(({ content, width = 320, o
 			});
 		} else if(mode === 'gallery') {
 			closeDialog();
-			console.log('trying to open gallery');
+			//console.log('trying to open gallery');
 			setTimeout(() => {
 				openDialog({
 					width: 400,

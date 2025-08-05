@@ -25,7 +25,7 @@ const Input = forwardRef<Ref, InputProps>(({ label, field, hint, placeholder, on
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleChange = (e: any) => {
-		const newValue = e.target.value.replace(/[^a-zA-Z]/g, '');
+		const newValue = e.target.value//.replace(/[^a-zA-Z]/g, '');
 		onChange && onChange(newValue);
 	}
 

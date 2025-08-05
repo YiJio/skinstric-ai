@@ -5,17 +5,14 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // css
 import '../styles.css';
-// hooks
-import usePersistStore from '@/hooks/use-persist-store';
-// stores
-import { useDemographicsStore } from '@/stores/demo-store';
 // utils
 import { reduceDemographics } from './utils';
+// hooks
+//import usePersistStore from '@/hooks/use-persist-store';
+// stores
+import { useDemographicsStore } from '@/stores/demo.store';
 // components
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import Loading from '@/components/loading';
-import NavButton from '@/components/nav-button';
+import { Header, Footer, Loading, NavButton } from '@/components';
 import { PageButton, Stats, Tabs } from '../_components';
 
 export default function Page() {
@@ -24,7 +21,8 @@ export default function Page() {
 	const [activeItem, setActiveItem] = useState(0);
 	// hooks
 	const router = useRouter();
-	const demoStore = usePersistStore(useDemographicsStore, (state) => state);
+	const demoStore = useDemographicsStore((state) => state);
+	//const demoStore = usePersistStore(useDemographicsStore, (state) => state);
 	// variables
 	const demoSorted = useMemo(() => {
 		if (demoStore?.demographics) return reduceDemographics(demoStore?.demographics);
@@ -38,15 +36,22 @@ export default function Page() {
 
 	useEffect(() => {
 		document.body.classList.add('sai-analysis-fixed');
+		const loadDemo = async() => {
+      const res = await fetch('/api/demo');
+      const data = await res.json();
+			// get data from db to save to store
+			if(data) { demoStore.setDemographics(data); }
+    }
 		const timer = setTimeout(async () => {
 			setIsLoading(false);
-		}, 100);
+		}, 200);
+		loadDemo();
 		return () => clearTimeout(timer);
 	}, []);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		console.log(demoStore?.demographics)
-	}, [demoStore]);
+	}, [demoStore]);*/
 
 	return (
 		<>

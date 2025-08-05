@@ -4,7 +4,7 @@
 import React, { forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // components
-import Popup from '@/components/popup';
+import { Popup } from '@/components';
 
 interface InputCameraProps {
 	image?: string;
@@ -25,7 +25,7 @@ const InputCamera = forwardRef<Ref, InputCameraProps>(({ content, width = 320 },
 	const router = useRouter();
 
 	const handleAccessCamera = () => {
-		console.log('opened?')
+		//console.log('opened?')
 		router.push('/camera');
 	}
 
