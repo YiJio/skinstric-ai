@@ -1,11 +1,14 @@
+// packages
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
+// css
 import './globals.css';
 import './quick.css';
 import './styles.css';
 import '../components/styles.css';
-import { Suspense } from 'react';
+// components
 import Loading from '@/components/loading';
 
 const roobert = localFont({
