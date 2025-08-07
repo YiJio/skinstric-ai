@@ -46,12 +46,13 @@ export default function Page() {
     }
 		const timer = setTimeout(async () => {
 			setIsLoading(false);
-		}, 100);
+		}, 200);
 		loadDemo();
 		return () => clearTimeout(timer);
 	}, []);
 
 	useEffect(() => {
+		//console.log('demostore initialized', demoStore)
 		if(!demoStore) { setIsLoading(true); }
 		else { setIsLoading(false); }
 		//console.log(demoStore?.demographics)
