@@ -1,7 +1,7 @@
 'use client';
 
 // packages
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 // css
@@ -25,6 +25,7 @@ export default function Page() {
 	const [formFields, setFormFields] = useState({ name: '', location: '' }); // temp
 	const [image, setImage] = useState(''); // temp
 	const [isLoading, setIsLoading] = useState(false);
+	const [callSubmit, setCallSubmit] = useState(false);
 	const [loadingStates, setLoadingStates] = useState({ submitting: false, uploading: false, processing: false });
 	// hooks
 	const router = useRouter();
@@ -102,8 +103,11 @@ export default function Page() {
 				const reader = new FileReader();
 				reader.onload = (e) => {
 					if (e.target?.result) {
-						galleryStore?.addImage(e.target.result as string);
-						handleSubmitImage(e.target.result as string);
+						const imageString = e.target.result as string;
+						galleryStore?.addImage(imageString);
+						setImage(imageString);
+						setCallSubmit(true);
+						//handleSubmitImage(imageString);
 					}
 				}
 				reader.readAsDataURL(file);
@@ -111,15 +115,23 @@ export default function Page() {
 				console.error(e);
 			}
 		} else {
+			//console.log('is calling from is not new')
 			setImage(file);
-			handleSubmitImage(file);
+			setCallSubmit(true);
+			//handleSubmitImage(file);
 		}
 	}
 
 	const handleSubmitImage = async (image: string) => {
 		try {
-			setTimeout(async () => {
 				setLoadingStates((prev) => ({ ...prev, uploading: false, processing: true }));
+				const latestGallery = galleryStore.gallery;
+				//console.log('UPLOADING TO DB BEFORE SUBMIT DEMO', latestGallery);
+				await fetch('/api/gallery', {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ gallery: latestGallery })
+				});
 				const response = await fetch(`${API_URL}/skinstricPhaseTwo`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json', },
@@ -131,11 +143,11 @@ export default function Page() {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json', },
 					body: JSON.stringify(data.data),
-				})
+				});
 				// do this in actual demographics page
-				//demoStore?.setDemographics(data.data);
-			}, 1000);
+				//demoStore?.setDemographics(data.data);			
 			setTimeout(() => {
+				setCallSubmit(false);
 				setLoadingStates((prev) => ({ ...prev, processing: false }));
 				router.push('/analysis/demographics');
 			}, 2000);
@@ -161,35 +173,40 @@ export default function Page() {
 		}
 	}, [formStore]);*/
 
-  // get saved user details from browser session
-  useEffect(() => {
+	// get saved user details from browser session
+	useEffect(() => {
 		document.body.classList.remove('sai-analysis-fixed');
-    const loadUser = async() => {
-			if(!formStore || !galleryStore) return;
-      const res = await fetch('/api/user');
-      const data = await res.json();
-			if(data) {
+		const loadUser = async () => {
+			if (!formStore || !galleryStore) return;
+			const res = await fetch('/api/user');
+			const data = await res.json();
+			if (data) {
+				//console.log('am i calling again')
 				formStore.setName(data.user.name);
 				formStore.setLocation(data.user.location);
 				galleryStore.setImages(data.user.gallery);
 				setFormFields({ name: data.user.name, location: data.user.location });
 			}
-    }
-    loadUser();
-  }, []);
+		}
+		loadUser();
+	}, []);
 
-  // update gallery in user whenever gallery store changes
-  useEffect(() => {
-    const updateGallery = async() => {
-			console.log('updating gallery from /introduction')
-      await fetch('/api/gallery', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ gallery: galleryStore.gallery })
-      });
-    }
-		if(galleryStore?.gallery) updateGallery();
-  }, [galleryStore?.gallery]);
+	// update gallery in user whenever gallery store changes
+	useEffect(() => {
+		if(callSubmit) {
+			//console.log('should call submit with', galleryStore.gallery);
+			handleSubmitImage(image);
+		}
+		/*const updateGallery = async() => {
+			console.log('updating gallery from /introduction', galleryStore.gallery)
+			await fetch('/api/gallery', {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ gallery: galleryStore.gallery })
+			});
+		}
+		if(galleryStore) updateGallery();*/
+	}, [callSubmit, image, galleryStore.gallery]);
 
 	return (
 		<>

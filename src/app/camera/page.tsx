@@ -22,12 +22,13 @@ export default function Page() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
 	const [isPhotoTaken, setIsPhotoTaken] = useState(false);
+	const [callSubmit, setCallSubmit] = useState(false);
 	// refs
 	const videoRef = useRef<HTMLVideoElement>(null);
 	// hooks
 	const router = useRouter();
 	const galleryStore = useGalleryStore((state) => state);
-	const demoStore = useDemographicsStore((state) => state);
+	//const demoStore = useDemographicsStore((state) => state);
 	//const galleryStore = usePersistStore(useGalleryStore, (state) => state);
 	//const demoStore = usePersistStore(useDemographicsStore, (state) => state);
 
@@ -55,6 +56,12 @@ export default function Page() {
 			}, 2000);
 			setTimeout(async () => {
 				setLoadingStates((prev) => ({ ...prev, uploading: false, processing: true }));
+				//console.log('latest', galleryStore.gallery)
+				await fetch('/api/gallery', {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ gallery: galleryStore?.gallery })
+				});
 				const response = await fetch(`${API_URL}/skinstricPhaseTwo`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json', },
@@ -62,7 +69,14 @@ export default function Page() {
 				});
 				const data = await response.json();
 				//console.log(data.data);
-				demoStore?.setDemographics(data.data);
+				// save this analysis to database
+				await fetch('/api/demo', {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json', },
+					body: JSON.stringify(data.data),
+				});
+				// do this in actual demographics page
+				//demoStore?.setDemographics(data.data);
 			}, 1000);
 			setTimeout(() => {
 				setLoadingStates((prev) => ({ ...prev, processing: false }));
@@ -86,19 +100,6 @@ export default function Page() {
 		}, 3000);
 		return () => clearTimeout(timer);
 	}, []);
-
-	// update gallery in user whenever gallery store changes
-  useEffect(() => {
-    const updateGallery = async() => {
-			console.log('updating gallery from /camera')
-      await fetch('/api/gallery', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ gallery: galleryStore.gallery })
-      });
-    }
-		if(galleryStore?.gallery) updateGallery();
-  }, [galleryStore?.gallery]);
 
 	const isNotLoadingOther = !loadingStates.processing && !loadingStates.uploading;
 

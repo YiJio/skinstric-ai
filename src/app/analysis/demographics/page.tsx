@@ -37,21 +37,25 @@ export default function Page() {
 	useEffect(() => {
 		document.body.classList.add('sai-analysis-fixed');
 		const loadDemo = async() => {
+			//console.log('fetching demo')
       const res = await fetch('/api/demo');
       const data = await res.json();
 			// get data from db to save to store
+			//console.log('demo from fetch', data);
 			if(data) { demoStore.setDemographics(data); }
     }
 		const timer = setTimeout(async () => {
 			setIsLoading(false);
-		}, 200);
+		}, 100);
 		loadDemo();
 		return () => clearTimeout(timer);
 	}, []);
 
-	/*useEffect(() => {
-		console.log(demoStore?.demographics)
-	}, [demoStore]);*/
+	useEffect(() => {
+		if(!demoStore) { setIsLoading(true); }
+		else { setIsLoading(false); }
+		//console.log(demoStore?.demographics)
+	}, [demoStore]);
 
 	return (
 		<>

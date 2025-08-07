@@ -1,7 +1,7 @@
 'use client';
 
 // packages
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // hooks
 //import usePersistStore from '@/hooks/use-persist-store';
 // stores
@@ -18,6 +18,8 @@ interface GalleryDialogContentProps {
 }
 
 const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ onSelect }) => {
+	// states
+	const [callSubmit, setCallSubmit] = useState(false);
 	// stores
 	const galleryStore = useGalleryStore((state) => state);
 	//const galleryStore = usePersistStore(useGalleryStore, (state) => state);
@@ -35,11 +37,27 @@ const GalleryDialogContent: React.FC<GalleryDialogContentProps> = ({ onSelect })
 		onSelect && onSelect(image);
 	}
 
+	const handleRemove = async (index: number) => {
+		galleryStore?.removeImage(images?.[index] ? images?.[index] : '');
+		setCallSubmit(true);		
+	}
+
+	useEffect(() => {
+		const handleDeleteImage = async () => {
+			await fetch('/api/gallery', {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ gallery: galleryStore?.gallery })
+			});
+		}
+		handleDeleteImage();
+	}, [callSubmit, galleryStore]);
+
 	return (
 		<>
 			<div className='sai-gallery'>
 				{[1,2,3].map((_, index) => (<React.Fragment key={index}>
-					<ImagePreview index={index} imageSrc={images?.[index] ? images?.[index] : 'NONE'} onClick={() => handleSelect(images?.[index])} onRemove={() => galleryStore?.removeImage(images?.[index] ? images?.[index] : '')} />
+					<ImagePreview index={index} imageSrc={images?.[index] ? images?.[index] : 'NONE'} onClick={() => handleSelect(images?.[index])} onRemove={() => handleRemove(index)} />
 				</React.Fragment>))}
 			</div>
 		</>
