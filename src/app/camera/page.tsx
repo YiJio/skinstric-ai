@@ -8,7 +8,7 @@ import './styles.css';
 // hooks
 //import usePersistStore from '@/hooks/use-persist-store';
 // stores
-import { useDemographicsStore } from '@/stores/demo.store';
+//import { useDemographicsStore } from '@/stores/demo.store';
 import { useGalleryStore } from '@/stores/gallery.store';
 // components
 import { Header, Footer, ListItem, Loading, NavButton } from '@/components';
@@ -22,7 +22,6 @@ export default function Page() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [loadingStates, setLoadingStates] = useState({ uploading: false, processing: false });
 	const [isPhotoTaken, setIsPhotoTaken] = useState(false);
-	const [callSubmit, setCallSubmit] = useState(false);
 	// refs
 	const videoRef = useRef<HTMLVideoElement>(null);
 	// hooks
@@ -89,6 +88,16 @@ export default function Page() {
 
 	useEffect(() => {
 		document.body.classList.remove('sai-analysis-fixed');
+		const loadUser = async () => {
+			if (!galleryStore) return;
+			const res = await fetch('/api/user');
+			const data = await res.json();
+			if (data) {
+				//console.log('am i calling again')
+				galleryStore.setImages(data.user.gallery);
+			}
+		}
+		loadUser();
 		const timer = setTimeout(async () => {
 			try {
 				setIsLoading(false);

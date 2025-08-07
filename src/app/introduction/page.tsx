@@ -197,15 +197,6 @@ export default function Page() {
 			//console.log('should call submit with', galleryStore.gallery);
 			handleSubmitImage(image);
 		}
-		/*const updateGallery = async() => {
-			console.log('updating gallery from /introduction', galleryStore.gallery)
-			await fetch('/api/gallery', {
-				method: 'PUT',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ gallery: galleryStore.gallery })
-			});
-		}
-		if(galleryStore) updateGallery();*/
 	}, [callSubmit, image, galleryStore.gallery]);
 
 	return (
