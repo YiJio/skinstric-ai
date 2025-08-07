@@ -56,6 +56,7 @@ export default function Page() {
 			setTimeout(async () => {
 				setLoadingStates((prev) => ({ ...prev, uploading: false, processing: true }));
 				//console.log('latest', galleryStore.gallery)
+				//console.log(image);
 				await fetch('/api/gallery', {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
@@ -76,11 +77,11 @@ export default function Page() {
 				});
 				// do this in actual demographics page
 				//demoStore?.setDemographics(data.data);
+				setTimeout(() => {
+					setLoadingStates((prev) => ({ ...prev, processing: false }));
+					router.push('/analysis/demographics');
+				}, 2000);
 			}, 1000);
-			setTimeout(() => {
-				setLoadingStates((prev) => ({ ...prev, processing: false }));
-				router.push('/analysis/demographics');
-			}, 2000);
 		} catch (e) {
 			console.error(e);
 		}
@@ -134,7 +135,7 @@ export default function Page() {
 				</>) : (<Loading content={loadingStates.uploading ? 'Sending your image to our servers...' : 'Preparing your analysis'} />)}
 			</>)}
 			{isNotLoadingOther && (<div className={`sai-rules${isLoading ? ' is-loading' : ''}`}>
-				<p style={{ textAlign:'center' }}>To get better results make sure to have</p>
+				<p style={{ textAlign: 'center' }}>To get better results make sure to have</p>
 				<ul className='h-flex h-gap-5'>
 					<ListItem inverse={!isLoading} description='Neutral expression' />
 					<ListItem inverse={!isLoading} description='Frontal pose' />
