@@ -42,6 +42,7 @@ export default function Page() {
       const data = await res.json();
 			// get data from db to save to store
 			//console.log('demo from fetch', data);
+			console.log('demo fetched')
 			if(data) { demoStore.setDemographics(data); }
     }
 		const timer = setTimeout(async () => {
@@ -53,6 +54,7 @@ export default function Page() {
 
 	useEffect(() => {
 		//console.log('demostore initialized', demoStore)
+		console.log('demostore initialized')
 		if(!demoStore) { setIsLoading(true); }
 		else { setIsLoading(false); }
 		//console.log(demoStore?.demographics)
